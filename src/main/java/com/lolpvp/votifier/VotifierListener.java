@@ -19,27 +19,25 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.io.File;
 import java.io.IOException;
 
-public class VotifierListener implements Listener, CommandExecutor
-{
+public class VotifierListener implements Listener, CommandExecutor {
 	private Core plugin;
 
-	public VotifierListener(Core plugin)
-	{
+	public VotifierListener(Core plugin) {
 		this.plugin = plugin;
 	}
 
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
-	{
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if ((cmd.getName().equalsIgnoreCase("votes")) && 
-				((sender instanceof Player)))
-		{
+				((sender instanceof Player))) {
 			Player player = (Player)sender;
-			if ((!player.hasPermission("lolpvp.votes")) && (!player.hasPermission("lolpvp.*")) && (!player.isOp()))
-			{
+
+			if ((!player.hasPermission("lolpvp.votes")) && (!player.hasPermission("lolpvp.*")) && (!player.isOp())) {
 				player.sendMessage(ChatColor.RED + "You do not have permission for this command.");
 				return true;
 			}
+
 			FileConfiguration fc = this.plugin.playerFile(player);
+
 			switch (args.length) {
 			    case 0:
 //				10 votes - 10 diamonds
@@ -78,37 +76,32 @@ public class VotifierListener implements Listener, CommandExecutor
                         player.sendMessage(ChatColor.RED + "You do not have permission for this command.");
                     }
 				    break;
+
                 default:
                     player.sendMessage(ChatColor.RED + "Usage: /votes or /votes <player>");
 			}
 		}
 		if ((cmd.getName().equalsIgnoreCase("resetvotes")) && 
-				((sender instanceof Player)))
-		{
+				((sender instanceof Player))) {
 			Player player = (Player)sender;
-			if (!player.isOp())
-			{
+			if (!player.isOp()) {
 				player.sendMessage(ChatColor.RED + "You do not have permission for this command.");
 				return true;
 			}
-			if (args.length >= 0)
-			{
+			if (args.length >= 0) {
 				player.sendMessage(ChatColor.GREEN + "Everyone's votes has been reset.");
 				String path = this.plugin.getDataFolder().getAbsolutePath();
 				String plugins = path.substring(0, path.lastIndexOf(File.separator));
 				File users = new File(plugins + File.separator + "LOLPVP", "userdata2");
 				if (users.exists()) {
-					for (File file : users.listFiles())
-					{
+					for (File file : users.listFiles()) {
 						YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-						try
-						{
+						try {
 							config.set("votes", Integer.valueOf(0));
 							config.set("pending-commands", null);
 							config.save(file);
 						}
-						catch (IOException ex)
-						{
+						catch (IOException ex) {
 							ex.printStackTrace();
 						}
 					}
@@ -119,8 +112,7 @@ public class VotifierListener implements Listener, CommandExecutor
 	}
 
 	@EventHandler
-	public void onJoin(final PlayerJoinEvent event)
-	{
+	public void onJoin(final PlayerJoinEvent event) {
 		final Player player = event.getPlayer();
 		final FileConfiguration fc = this.plugin.playerFile(event.getPlayer());
 		if (fc.getString("votes") == null) {
@@ -129,33 +121,26 @@ public class VotifierListener implements Listener, CommandExecutor
 		fc.set("uuid", player.getUniqueId().toString());
 		if (fc.getStringList("pending-command") != null) {
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, () -> {
-                for (String s : fc.getStringList("pending-command"))
-                {
+                for (String s : fc.getStringList("pending-command")) {
                     giveReward(player);
                 }
                 fc.set("pending-command", null);
-                try
-                {
+                try {
                     fc.save(VotifierListener.this.plugin.playerData(event.getPlayer()));
                 }
-                catch (IOException exception)
-                {
+                catch (IOException exception) {
                     exception.printStackTrace();
                 }
             }, 40L);
 		}
-		try
-		{
+		try {
 			fc.save(this.plugin.playerData(event.getPlayer()));
-		}
-		catch (IOException exception)
-		{
+		} catch (IOException exception) {
 			exception.printStackTrace();
 		}
 	}
 
-	public void load(String name)
-	{
+	public void load(String name) {
 		FileConfiguration fc = this.plugin.playerFile(UUIDLibrary.getUUIDFromName(name));
 		if (fc.get("votes") == null) {
 			fc.set("votes", Integer.valueOf(1));
@@ -168,12 +153,9 @@ public class VotifierListener implements Listener, CommandExecutor
 			Player player = Bukkit.getServer().getPlayer(name);
 			giveReward(player);
 		}
-		try
-		{
+		try {
 			fc.save(this.plugin.playerData(UUIDLibrary.getUUIDFromName(name)));
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -191,8 +173,7 @@ public class VotifierListener implements Listener, CommandExecutor
     }
 
 	@EventHandler(priority=EventPriority.NORMAL)
-	public void onVote(VotifierEvent event)
-	{
+	public void onVote(VotifierEvent event) {
 		load(event.getVote().getUsername());
 	}
 }

@@ -1,8 +1,9 @@
 name: LOLPVP 
 main: com.lolpvp.core.Core
 authors: [Spaces, WhatATopic]
-version: 1.0.0
+version: ${project.version}
 depend: [PermissionsEX, Vault, Votifier, Essentials]
+website: lolpvp.com
 commands:
    lol:
    regen:
