@@ -1,12 +1,10 @@
 package com.lolpvp.votifier;
 
-import java.io.File;
-import java.io.IOException;
-
+import com.lolpvp.core.Core;
+import com.lolpvp.utils.UUIDLibrary;
 import com.vexsoftware.votifier.model.VotifierEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,10 +15,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
 
-import com.lolpvp.core.Core;
-import com.lolpvp.utils.UUIDLibrary;
+import java.io.File;
+import java.io.IOException;
 
 public class VotifierListener implements Listener, CommandExecutor
 {
@@ -43,51 +40,46 @@ public class VotifierListener implements Listener, CommandExecutor
 				return true;
 			}
 			FileConfiguration fc = this.plugin.playerFile(player);
-			switch (args.length)
-			{
-			case 0: 
+			switch (args.length) {
+			    case 0:
 //				10 votes - 10 diamonds
 //				25 votes - $10,000 ingame money
 //				50 votes - 100 diamonds
 //				75 votes - $100,000 ingame money
 //				100 votes - 50 op apples
 //				125 votes - $25 donation voucher
-				player.sendMessage(ChatColor.AQUA + "10" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "10 diamonds.");
-				player.sendMessage(ChatColor.AQUA + "25" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "$10,000 ingame money.");
-				player.sendMessage(ChatColor.AQUA + "50" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "100 diamonds.");
-				player.sendMessage(ChatColor.AQUA + "75" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "$100,000 ingame money.");
-				player.sendMessage(ChatColor.AQUA + "100" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "50 OP Apples.");
-				player.sendMessage(ChatColor.AQUA + "125" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "$25 donation voucher.");
-				int i = fc.getInt("votes");
-				player.sendMessage(ChatColor.GRAY + "Total votes for this month: " + ChatColor.AQUA + Integer.toString(i));
-				return true;
-			case 1:
-				if (args[0].equalsIgnoreCase("top"))
-				{
-					this.plugin.getVotesTop().onSort(player);
-					player.sendMessage("test");
-					return true;
-				}
-				if (player.hasPermission("lolpvp.votes.others"))
-				{
-					if (UUIDLibrary.getUUIDFromName(args[0]) != null)
-					{
-						FileConfiguration fc2 = this.plugin.playerFile(UUIDLibrary.getUUIDFromName(args[0]));
-						int v = fc2.getInt("votes");
-						player.sendMessage(ChatColor.AQUA + UUIDLibrary.getExactName(args[0]) + "'s " + ChatColor.GRAY + "total votes for this month: " + ChatColor.AQUA + Integer.toString(v));
-					}
-					else
-					{
-						player.sendMessage(ChatColor.RED + "Could not find player: " + args[0]);
-					}
-				}
-				else
-				{
-					player.sendMessage(ChatColor.RED + "You do not have permission for this command.");
-				}
-				break;
-			default: 
-				player.sendMessage(ChatColor.RED + "Usage: /votes or /votes <player>");
+                    player.sendMessage(ChatColor.AQUA + "10" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "10 diamonds.");
+                    player.sendMessage(ChatColor.AQUA + "25" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "$10,000 ingame money.");
+                    player.sendMessage(ChatColor.AQUA + "50" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "100 diamonds.");
+                    player.sendMessage(ChatColor.AQUA + "75" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "$100,000 ingame money.");
+                    player.sendMessage(ChatColor.AQUA + "100" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "50 OP Apples.");
+                    player.sendMessage(ChatColor.AQUA + "125" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "$25 donation voucher.");
+                    int votes = fc.getInt("votes");
+                    player.sendMessage(ChatColor.GRAY + "Total votes for this month: " + ChatColor.AQUA + votes);
+                    return true;
+
+				case 1:
+                    if (args[0].equalsIgnoreCase("top")) {
+                        this.plugin.getVotesTop().onSort(player);
+                        player.sendMessage("test");
+                        return true;
+                    }
+                    if (player.hasPermission("lolpvp.votes.others")) {
+                        if (UUIDLibrary.getUUIDFromName(args[0]) != null) {
+                            FileConfiguration fc2 = this.plugin.playerFile(UUIDLibrary.getUUIDFromName(args[0]));
+                            int v = fc2.getInt("votes");
+                            player.sendMessage(ChatColor.AQUA + UUIDLibrary.getExactName(args[0]) + "'s " + ChatColor.GRAY + "total votes for this month: " + ChatColor.AQUA + Integer.toString(v));
+                        }
+                        else {
+                            player.sendMessage(ChatColor.RED + "Could not find player: " + args[0]);
+                        }
+                    }
+                    else {
+                        player.sendMessage(ChatColor.RED + "You do not have permission for this command.");
+                    }
+				    break;
+                default:
+                    player.sendMessage(ChatColor.RED + "Usage: /votes or /votes <player>");
 			}
 		}
 		if ((cmd.getName().equalsIgnoreCase("resetvotes")) && 
@@ -126,33 +118,6 @@ public class VotifierListener implements Listener, CommandExecutor
 		return true;
 	}
 
-	public void add(Player player, ItemStack ii)
-	{
-		if (player.getInventory().firstEmpty() == -1)
-		{
-			int zip = 0;
-			for (ItemStack o : player.getInventory().getContents())
-			{
-				int l = o.getAmount();
-				zip++;
-				if ((o.getType().equals(ii.getType())) && (o.getAmount() < ii.getMaxStackSize()))
-				{
-					player.getInventory().addItem(new ItemStack[] { ii });
-					break;
-				}
-				if ((zip == 36) && (l != l + 1))
-				{
-					player.getWorld().dropItemNaturally(player.getLocation(), ii);
-					break;
-				}
-			}
-		}
-		else
-		{
-			player.getInventory().addItem(new ItemStack[] { ii });
-		}
-	}
-
 	@EventHandler
 	public void onJoin(final PlayerJoinEvent event)
 	{
@@ -166,24 +131,7 @@ public class VotifierListener implements Listener, CommandExecutor
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, () -> {
                 for (String s : fc.getStringList("pending-command"))
                 {
-                    String[] parts = s.split(":");
-                    if (parts[0].equalsIgnoreCase("give"))
-                    {
-                        String[] p = parts[1].split(";");
-                        int item = Integer.parseInt(p[1]);
-                        int data = Integer.parseInt(parts[1]);
-                        int amount = Integer.parseInt(parts[2]);
-                        ItemStack ii = new ItemStack(Material.getMaterial(item), amount, (short)data);
-                        VotifierListener.this.add(player, ii);
-                    }
-                    else if (parts[0].equalsIgnoreCase("send"))
-                    {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', parts[1]));
-                    }
-                    else if (parts[0].equalsIgnoreCase("money"))
-                    {
-                        Core.getEconomy().depositPlayer(player, Double.parseDouble(parts[1]));
-                    }
+                    giveReward(player);
                 }
                 fc.set("pending-command", null);
                 try
