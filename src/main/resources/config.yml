@@ -1,0 +1,502 @@
+items:
+   electromagnet: 
+       price: 1
+   assassin8:
+       price: 2700000 
+   ejacul8: 
+       price: 2700000
+   excalibur:
+       price: 30000 
+   prot-4: 
+       price: 30000
+   wife-beater:
+       price: 2700000  
+   magic-sperm: 
+       price: 2700000
+   date-rapist:
+       price: 900000   
+   baby-maker: 
+       price: 900000
+   wild-turkey:
+       price: 90000   
+   leatherfaces-chainsaw: 
+       price: 900000
+   prot-5:
+       price: 900000   
+   emp: 
+       price: 1
+   blinding-rod:
+       price: 1   
+   gold-turkey: 
+       price: 900000
+   iceblade:
+       price: 5400000   	   
+   noobs-blade: 
+       price: 9000
+   prot-4-ae:
+       price: 30000 
+   prot-5-ae: 
+       price: 900000
+   prot-6:
+       price: 2700000 
+   prot-6-ae: 
+       price: 2700000
+   witchs-hat:
+       price: 900000  
+   witchs-magic: 
+       price: 1
+   healing-shears:
+       price: 1   
+   rabbits-foot: 
+       price: 900000
+   snow-armor:
+       price: 90000   
+   abominable-snowman: 
+       price: 2700000
+   bunny-ears:
+       price: 1   
+   morning-bj: 
+       price: 90000
+   morning-wood:
+       price: 90000   
+   sparring-axe: 
+       price: 90000
+   invisibility-ring:
+       price: 5400000 
+   the-beast: 
+       price: 1
+   rocket-boots:
+       price: 900000 
+   fortune-shears: 
+       price: 1
+   ae-bow:
+       price: 1 
+   the-40-foot-cumshot: 
+       price: 1
+   ender-bow:
+       price: 1  
+   zeus-bow: 
+       price: 1
+   poison-bow:
+       price: 1   
+   cupids-bow: 
+       price: 1
+   firework-bow:
+       price: 1   
+   battle-axe: 
+       price: 900000
+   parkour-boots:
+       price: 1   
+   4-leaf-clover: 
+       price: 1
+   cloud-boots:
+       price: 900000   
+   bone-sword: 
+       price: 900000
+   sun-glasses:
+       price: 900000  	   
+   eggsploding-egg: 
+       price: 1
+   bunny-beater:
+       price: 900000 
+   mjolnir: 
+       price: 900000
+   captain-americas-vibranium-sword:
+       price: 900000 
+   magic-feather: 
+       price: 1
+   mk-ii:
+       price: 900000  
+   hulk-smash: 
+       price: 1
+   pay-day:
+       price: 2700000  
+   spell-book: 
+       price: 900000
+   piano-key:
+       price: 2700000   
+   spider-man-bow: 
+       price: 1
+   money-bag:
+       price: 1   
+   lolitssword: 
+       price: 900000
+   fire-ball:
+       price: 900000
+
+# ====== #
+# VOTING #
+# ======= #
+
+votestop: "&a{RANK}. &7{NAME}: &a{VOTES}"
+
+votes:
+   2-votes:
+      - "send:&bThanks for voting! Keep it up!"
+   5-votes:
+      - "give:264;0:1"
+   10-votes:
+      - "give:264;0:10"
+   25-votes:
+      - "money:10000"
+   50-votes:
+      - "give:264;0:100"
+   75-votes:
+      - "money:100000"
+   100-votes:
+      - "give:322;2:50"
+   125-votes:
+      - "send:&bEmail support@lolpvp.com to receive your Buycraft voucher!"
+
+set-next-vote: true
+
+# ====== #
+#  TAGS  #
+# ====== #
+
+max-longtag-length: 25
+max-normaltag-length: 5
+blocked-tags:
+   - "mod"
+   - "owner"
+   - "admin"
+   - "blockedtag"
+   - "helper"
+   - "moderator"
+   - "administrator"
+   - "staff"
+   - "own3r"
+   - "helpr"
+   - "adm1n"
+   - "m0d"
+   - "ownr"
+
+# ========= #
+# QUICK FIX #
+# ========= #
+
+pt-cooldown: 1
+buy-sign-cooldown: 1
+command-cooldown: 1
+invisring-disabled: false
+
+# ====== #
+# GROUPS #
+# ====== #
+
+list:
+   - "&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&bLIST&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-&7&m-&8&m-"
+   - " "
+   - "&7Players online: &b<&7{ONLINE}&b/&7100&b>"
+   - "&7Staff online: &b<&7{STAFF_ONLINE}&b>"
+   - "&7Donators online: &b<&7{DONORS}&b>"
+   - " "
+   - "&b<{ALL_PLAYERS}&b>"
+
+list-prefix: "&8[{TAG}&8]&7"
+
+list-no-tag-prefix: "&7"
+
+tab-prefix: "&7"
+
+groups:
+   Admin:
+      has-tag: "&8[&bThe Wolf of Minecraft&8]&7{PLAYER}&6> &7"
+      no-tag: "&8[&bThe Wolf of Minecraft&8]&7{PLAYER}&6> &7"
+      next-set-time: "1:0:0:0:0:0"
+      blocked-trades:
+      - "$$$$$"
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      - "repair"
+      - "heal"
+      - "regen"
+      - "arenavip"
+      - "ironman"
+      - "hat"
+      - "feed"
+      - "ignore"
+      - "spinningtag"
+      - "ptime"
+      - "enderchest"
+      - "tptoggle"
+      fixed-tag: "&8[&bThe Wolf of Minecraft&8]&7"
+      staff: true
+      donator: true
+   OPCREATIVE:
+      has-tag: "&8[&cAdmin&8]&7{PLAYER}&6> &7"
+      no-tag: "&8[&cAdmin&8]&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:0:0:1"
+      blocked-trades:
+      - "$$$$$"
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      - "repair"
+      - "heal"
+      - "regen"
+      - "arenavip"
+      - "ironman"
+      - "hat"
+      - "feed"
+      - "ignore"
+      - "spinningtag"
+      - "ptime"
+      - "enderchest"
+      - "tptoggle"
+      fixed-tag: "&8[&cAdmin&8]&7"
+      staff: true
+      donator: true
+   OP:
+      has-tag: "&8[&cAdmin&8]&7{PLAYER}&6> &7"
+      no-tag: "&8[&cAdmin&8]&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:0:0:1"
+      blocked-trades:
+      - "$$$$$"
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      - "repair"
+      - "heal"
+      - "regen"
+      - "arenavip"
+      - "ironman"
+      - "hat"
+      - "feed"
+      - "ignore"
+      - "spinningtag"
+      - "ptime"
+      - "enderchest"
+      - "tptoggle"
+      fixed-tag: "&8[&cAdmin&8]&7"
+      staff: true
+      donator: true
+   OPMOD:
+      has-tag: "&8[&cMod&8]&7{PLAYER}&6> &7"
+      no-tag: "&8[&cMod&8]&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:0:0:1"
+      blocked-trades:
+      - "$$$$$"
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      - "repair"
+      - "heal"
+      - "regen"
+      - "arenavip"
+      - "ironman"
+      - "hat"
+      - "feed"
+      - "ignore"
+      - "spinningtag"
+      - "ptime"
+      - "enderchest"
+      - "tptoggle"
+      fixed-tag: "&8[&cMod&8]&7"
+      staff: true
+      donator: true
+   OPHEAD:
+      has-tag: "&8[&cHead Admin&8]&7{PLAYER}&6> &7"
+      no-tag: "&8[&cHead Admin&8]&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:0:0:1"
+      blocked-trades:
+      - "$$$$$"
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      - "repair"
+      - "heal"
+      - "regen"
+      - "arenavip"
+      - "ironman"
+      - "hat"
+      - "feed"
+      - "ignore"
+      - "spinningtag"
+      - "ptime"
+      - "enderchest"
+      - "tptoggle"
+      fixed-tag: "&8[&cHead Admin&8]&7"
+      staff: true
+      donator: true
+   Donations:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&8[&cAdmin&8]&7{PLAYER}&6> &7"
+      next-set-time: "1:0:0:0:0:0"
+      blocked-trades:
+      - "$$$$$"
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      - "repair"
+      - "heal"
+      - "regen"
+      - "arenavip"
+      - "ironman"
+      - "hat"
+      - "feed"
+      - "ignore"
+      - "spinningtag"
+      - "ptime"
+      - "enderchest"
+      - "tptoggle"
+      fixed-tag: "&8[&cAdmin&8]&7"
+      staff: true
+      donator: true
+   Helper:
+      has-tag: "&8[&cHelper&8]&7{PLAYER}&6> &7"
+      no-tag: "&8[&cHelper&8]&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:0:0:1"
+      blocked-trades:
+      - "$$$$$"
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      fixed-tag: "&8[&cHelper&8]&7"
+      staff: true
+      donator: true
+   HeadAdmin:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&7{PLAYER}&6> &7"
+      next-set-time: "1:0:0:0:0:0"
+      blocked-trades:
+      - "$$$$$"
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      - "repair"
+      - "heal"
+      - "regen"
+      - "arenavip"
+      - "ironman"
+      - "hat"
+      - "feed"
+      - "ignore"
+      - "spinningtag"
+      - "ptime"
+      - "enderchest"
+      - "tptoggle"
+      staff: true
+      donator: true
+   HeadAdminHidden:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&7{PLAYER}&6> &7"
+      next-set-time: "1:0:0:0:0:0"
+      blocked-trades:
+      - "$$$$$"
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      - "repair"
+      - "heal"
+      - "regen"
+      - "arenavip"
+      - "ironman"
+      - "hat"
+      - "feed"
+      - "ignore"
+      - "spinningtag"
+      - "ptime"
+      - "enderchest"
+      - "tptoggle"
+      staff: true
+      donator: true
+   Donator_Five:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&7{PLAYER}&6> &7"
+      next-set-time: "0:1:0:0:0:0"
+      blocked-trades:
+      - "$$$$$"
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      fixed-tag: "&8[&4$$$$$&8]&7"
+      staff: false
+      donator: true
+   Donator_Four:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:1:0:0"
+      blocked-trades:
+      - "thad+"
+      - "thad"
+      - "vip+"
+      - "vip"
+      fixed-tag: "&8[&4THAD+&8]&7"
+      staff: false
+      donator: true
+   Donator_Three:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:3:0:0"
+      blocked-trades:
+      - "thad"
+      - "vip+"
+      - "vip"
+      fixed-tag: "&8[&4THAD&8]&7"
+      staff: false
+      donator: true
+   Donator_Two:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:5:0:0"
+      blocked-trades:
+      - "vip+"
+      - "vip"
+      fixed-tag: "&8[&4VIP+&8]&7"
+      staff: false
+      donator: true
+   Donator_One:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&7{PLAYER}&6> &7"
+      next-set-time: "8:0:0:30:0:0"
+      fixed-tag: "&8[&4VIP&8]&7"
+      staff: false
+      donator: true
+   Donator_Zero:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&7{PLAYER}&6> &7"
+      next-set-time: "8:0:0:30:0:0"
+      blocked-trades:
+      - "vip"
+      fixed-tag: "&8[&4VIP&8]&7"
+      staff: false
+      donator: true
+   YT:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&8[YT$$]&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:0:0:1"
+      fixed-tag: "&8[&8YT$$&8]&7"
+      staff: false
+      donator: false
+   UMAD:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&8[UMAD]&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:0:0:1"
+      fixed-tag: "&8[&8UMAD?&8]&7"
+      staff: false
+      donator: false
+   N00B:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&8[N00B]&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:0:0:1"
+      fixed-tag: "&8[&8N00B&8]&7"
+      staff: false
+      donator: false
+   Regular:
+      has-tag: "&8[{TAG}&8]&7{PLAYER}&6> &7"
+      no-tag: "&7{PLAYER}&6> &7"
+      next-set-time: "0:0:0:0:0:1"
+      staff: false
+      donator: false

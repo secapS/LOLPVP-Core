@@ -1,0 +1,50 @@
+name: LOLPVP 
+main: com.lolpvp.core.Core
+authors: [Spaces, WhatATopic]
+version: 1.0.0
+depend: [PermissionsEX, Vault, Votifier, Essentials]
+commands:
+   lol:
+   regen:
+      aliases: [re]
+   ironman:
+      aliases: [im]
+   i2:
+   nightvision:
+      aliases: [nv]
+   fireresistance:
+      aliases: [fr]
+   invis: 
+      aliases: [in]
+   chest2:
+   clearchest2:
+   pt:
+   qf:
+   lolt:
+   loltd:
+   loltr:
+   lolto:
+   lolm:
+   lolnt:
+   lolrnt:
+   ballersign:
+   who:
+      aliases: [list]
+   votes:
+      aliases: [vote]
+   resetvotes:
+   clearchat:
+      aliases: [cc]
+   muteall:
+   loltrade:
+   clearpt:
+   redeem:
+   pgive:
+   dispose:
+      aliases: [disposal]
+   lolsword:
+   resetmoneybag: 
+   invisring:
+   clearchests:
+   checkchests:
+   setnick:
