@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import com.lolpvp.core.Core;
-import com.lolpvp.utils.UUIDLibrary;
+import com.lolpvp.utils.UUIDFetcher;
 
 public class VirtualChest implements CommandExecutor
 {
@@ -45,19 +45,19 @@ public class VirtualChest implements CommandExecutor
 						if(player.hasPermission("lolpvp.chest2.others"))
 						{
 							String s = args[0].toLowerCase();
-							if (UUIDLibrary.getUUIDFromName(args[0]) != null)
+							if (UUIDFetcher.getUUIDFromName(args[0]) != null)
 							{
-								FileConfiguration fc = this.plugin.playerFile(UUIDLibrary.getUUIDFromName(s));
+								FileConfiguration fc = this.plugin.playerFile(UUIDFetcher.getUUIDFromName(s));
 								if (fc.getConfigurationSection("chest.") != null)
 								{
-									String name = ChatColor.RED + UUIDLibrary.getExactName(args[0]);
+									String name = ChatColor.RED + UUIDFetcher.getExactName(args[0]);
 									Inventory inv = Bukkit.getServer().createInventory(null, 54, name);
 									VirtualChestManager.getInstance().load(s, inv, player);
 									VirtualChestManager.getInstance().in.add(player.getName());
 								}
 								else
 								{
-									player.sendMessage(ChatColor.AQUA + UUIDLibrary.getExactName(args[0]) + ChatColor.RED + " does not have a chest.");
+									player.sendMessage(ChatColor.AQUA + UUIDFetcher.getExactName(args[0]) + ChatColor.RED + " does not have a chest.");
 								}
 							}
 							else
@@ -87,7 +87,7 @@ public class VirtualChest implements CommandExecutor
 					
 					if(args.length == 1 && player.hasPermission("lolpvp.chearchest2.others")) 
 					{	
-						if(UUIDLibrary.getUUIDFromName(args[0]) != null)
+						if(UUIDFetcher.getUUIDFromName(args[0]) != null)
 						{
 							VirtualChestManager.getInstance().clearChest(player, args[0]);	
 						}

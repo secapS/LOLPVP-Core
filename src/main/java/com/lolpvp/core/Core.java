@@ -3,6 +3,7 @@ package com.lolpvp.core;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import net.milkbowl.vault.chat.Chat;
@@ -45,7 +46,7 @@ import com.lolpvp.signs.BallerSign;
 import com.lolpvp.signs.BuySigns;
 import com.lolpvp.signs.SignSettingsManager;
 import com.lolpvp.utils.AntiSpamBot;
-import com.lolpvp.utils.UUIDLibrary;
+import com.lolpvp.utils.UUIDFetcher;
 import com.lolpvp.virtualchest.VirtualChest;
 import com.lolpvp.virtualchest.VirtualChestListener;
 import com.lolpvp.virtualchest.VirtualChestManager;
@@ -87,7 +88,6 @@ public class Core extends JavaPlugin implements Listener
 		PerkBookManager.setup();
 		ItemManager.setup(this);
 		this.setupChat();
-		new UUIDLibrary(this);
 		muteAll = new MuteAll(this);
 		votestop = new VotesTop(this);
 		votifierListener = new VotifierListener(this);
@@ -147,8 +147,6 @@ public class Core extends JavaPlugin implements Listener
 		this.getCommand("lolm").setExecutor(this.chatFix);
 		
 		this.getCommand("who").setExecutor(new Who(this));
-		this.getCommand("votes").setExecutor(this.votifierListener);
-		this.getCommand("resetvotes").setExecutor(this.votifierListener);
 		this.getCommand("ballersign").setExecutor(new BallerSign());
 		this.getCommand("clearchat").setExecutor(new ClearChat(this));
 		this.getCommand("muteall").setExecutor(muteAll);
@@ -174,12 +172,6 @@ public class Core extends JavaPlugin implements Listener
 	public static Core getInstance() {
 		return instance;
 	}
-	
-//	@Override
-//	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args)
-//	{
-//		return false;
-//	}
 
 	@Override
 	public void onDisable()
@@ -218,54 +210,6 @@ public class Core extends JavaPlugin implements Listener
 		final WorldGuardPlugin wg = getWorldGuard();
 		return wg == null || wg.canBuild(player, location);
 	}
-	
-	public static me.whatatopic.lolpvplevels.Main getLevels()
-	{
-		return (me.whatatopic.lolpvplevels.Main)getPlugin(me.whatatopic.lolpvplevels.Main.class);
-	}
-	
-	public static me.whatatopic.lolpvpteams.Teams getTeams()
-	{
-		return (me.whatatopic.lolpvpteams.Teams)getPlugin(me.whatatopic.lolpvpteams.Teams.class);
-	}
-	
-	public static me.MirrorRealm.chest.Main getEasyChests()
-	{
-		return ( me.MirrorRealm.chest.Main)getPlugin( me.MirrorRealm.chest.Main.class);
-	}
-	
-//	public void removePVPRegions(final Player player)
-//	{
-//		final HashMap<ProtectedRegion, Map<Flag<?>, Object>> oldFlags = new HashMap<>();
-//		
-//		HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
-//		final RegionManager regionManager = getWorldGuard().getRegionManager(this.getServer().getWorld("world"));
-//		for(ProtectedRegion region : regionManager.getRegions().values())
-//		{
-//			oldFlags.put(region, region.getFlags());
-//			flags.put(DefaultFlag.PVP, StateFlag.State.ALLOW);
-//			if(region.getFlags().containsKey(DefaultFlag.BUILD) && region.getFlag(DefaultFlag.BUILD).equals(StateFlag.State.DENY))
-//				flags.put(DefaultFlag.BUILD, StateFlag.State.DENY);
-//			region.setFlags(flags);
-//			flags.clear();
-//		}
-//		
-//		player.sendMessage("Removed all PVP flags");
-//		
-//		this.getServer().getScheduler().runTaskLater(this, new Runnable()
-//		{
-//			@Override
-//			public void run()
-//			{
-//				for(ProtectedRegion region : regionManager.getRegions().values())
-//				{
-//					region.setFlags(oldFlags.get(region));
-//				}
-//				player.sendMessage("All region flags restored");
-//				oldFlags.clear();
-//			}
-//		}, 20L);
-//	}
 
 	public static boolean canBuildHere(Player player, Block block) {
 		if (block == null) {
@@ -319,36 +263,23 @@ public class Core extends JavaPlugin implements Listener
 		return new File(getDataFolder() + File.separator + "pvpchest.yml");
 	}
 
-	public FileConfiguration playerFile(String s)
+	public FileConfiguration playerData(UUID uuid)
 	{
-		File playerDir = new File(getDataFolder() + File.separator + "userdata2" + File.separator + s + ".yml");
-		return YamlConfiguration.loadConfiguration(playerDir);
+		return YamlConfiguration.loadConfiguration(playerFile(uuid));
 	}
 
-	public FileConfiguration playerFile(Player player)
+	public FileConfiguration playerData(OfflinePlayer player)
 	{
-		return playerFile(player.getUniqueId().toString().replace("-", ""));
+		return playerData(player.getUniqueId());
 	}
 
-	public FileConfiguration playerFile(OfflinePlayer player)
-	{
-		return playerFile(player.getUniqueId().toString().replace("-", ""));
+	public File playerFile(UUID uuid) {
+		return new File(getDataFolder() + File.separator + "userdata" + File.separator + uuid.toString() + ".yml");
 	}
 
-	public File playerData(String s)
-	{
-		return new File(getDataFolder() + File.separator + "userdata2" + File.separator + s + ".yml");
-	}
-
-	public File playerData(Player player)
-	{
-		return playerData(player.getUniqueId().toString().replace("-", ""));
-	}
-
-	public File playerData(OfflinePlayer player)
-	{
-		return playerData(player.getUniqueId().toString().replace("-", ""));
-	}
+    public File playerFile(Player player) {
+        return new File(getDataFolder() + File.separator + "userdata" + File.separator + player.getUniqueId().toString() + ".yml");
+    }
 
 	private boolean setupEconomy()
 	{

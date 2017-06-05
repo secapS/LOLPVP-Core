@@ -47,7 +47,7 @@ public class Who implements CommandExecutor
 								if ((player.canSee(o)) && 
 										(Core.permission.getPrimaryGroup(o).equalsIgnoreCase(l1)))
 								{
-									FileConfiguration fc = this.plugin.playerFile(o);
+									FileConfiguration fc = this.plugin.playerData(o);
 									if (this.plugin.getConfig().getString("groups." + l1 + ".fixed-tag") == null)
 									{
 										if (fc.getString("tag") != null)

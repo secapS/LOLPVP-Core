@@ -209,11 +209,11 @@ public class MoneyBag extends BallerItem implements CommandExecutor
 		SimpleDateFormat format = new SimpleDateFormat("dd:MM:yyyy:HH:mm:ss");
 		String parts = "0:0:0:3:0:0";
 		String finalone = format.format(add(parts.split(":")));
-		FileConfiguration fc = this.plugin.playerFile(player);
+		FileConfiguration fc = this.plugin.playerData(player);
 		fc.set("moneybag-cooldown-set", finalone);
 		try
 		{
-			fc.save(this.plugin.playerData(player));
+			fc.save(this.plugin.playerFile(player));
 		}
 		catch (IOException e)
 		{
@@ -224,7 +224,7 @@ public class MoneyBag extends BallerItem implements CommandExecutor
 	public boolean isOnCooldown(Player player)
 	{
 		SimpleDateFormat format = new SimpleDateFormat("dd:MM:yyyy:HH:mm:ss");
-		FileConfiguration fc = this.plugin.playerFile(player);
+		FileConfiguration fc = this.plugin.playerData(player);
 		Date d;
 		try {
 			if(fc.getString("moneybag-cooldown-set") != null)
@@ -338,10 +338,10 @@ public class MoneyBag extends BallerItem implements CommandExecutor
 				{
 					if(args.length == 0)
 					{
-						FileConfiguration fc = this.plugin.playerFile(player);
+						FileConfiguration fc = this.plugin.playerData(player);
 						fc.set("moneybag-cooldown-set", null);
 						try {
-							fc.save(this.plugin.playerData(player));
+							fc.save(this.plugin.playerFile(player));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -349,10 +349,10 @@ public class MoneyBag extends BallerItem implements CommandExecutor
 					}
 					else if(args.length == 1)
 					{
-						FileConfiguration fc = this.plugin.playerFile(Bukkit.getOfflinePlayer(args[0]));
+						FileConfiguration fc = this.plugin.playerData(Bukkit.getOfflinePlayer(args[0]));
 						fc.set("moneybag-cooldown-set", null);
 						try {
-							fc.save(this.plugin.playerData(player));
+							fc.save(this.plugin.playerFile(player));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

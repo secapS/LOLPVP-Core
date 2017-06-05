@@ -19,7 +19,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.lolpvp.core.Core;
-import com.lolpvp.utils.UUIDLibrary;
+import com.lolpvp.utils.UUIDFetcher;
 
 public class ChatFix implements Listener, CommandExecutor
 {
@@ -32,7 +32,7 @@ public class ChatFix implements Listener, CommandExecutor
 	
 	public void set(Player player, String[] args)
 	{
-		FileConfiguration fc = this.plugin.playerFile(player);
+		FileConfiguration fc = this.plugin.playerData(player);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i <= args.length - 1; i++) {
 			sb.append(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', args[i]))).append(" ");
@@ -83,14 +83,14 @@ public class ChatFix implements Listener, CommandExecutor
 			switch (args.length)
 			{
 			case 1: 
-				if (UUIDLibrary.getUUIDFromName(args[0]) != null)
+				if (UUIDFetcher.getUUIDFromName(args[0]) != null)
 				{
-					String uuid = UUIDLibrary.getUUIDFromName(args[0]);
+					String uuid = UUIDFetcher.getUUIDFromName(args[0]);
 					FileConfiguration fc = this.plugin.playerFile(uuid);
 					SimpleDateFormat format = new SimpleDateFormat("dd:MM:yyyy:HH:mm:ss");
 					Date date = new Date();
 					fc.set("next-set", format.format(date));
-					sender.sendMessage(ChatColor.GREEN + "Reset " + UUIDLibrary.getExactName(args[0]) + " set-tag time to now.");
+					sender.sendMessage(ChatColor.GREEN + "Reset " + UUIDFetcher.getExactName(args[0]) + " set-tag time to now.");
 					try
 					{
 						fc.save(this.plugin.playerData(uuid));
@@ -164,7 +164,7 @@ public class ChatFix implements Listener, CommandExecutor
 				if ((sender instanceof Player))
 				{
 					Player player = (Player)sender;
-					FileConfiguration fc = this.plugin.playerFile(player);
+					FileConfiguration fc = this.plugin.playerData(player);
 					if (fc.getString("tag") == null)
 					{
 						sender.sendMessage(ChatColor.RED + "You do not have a tag set.");
@@ -186,7 +186,7 @@ public class ChatFix implements Listener, CommandExecutor
 					}
 					try
 					{
-						fc.save(this.plugin.playerData(player));
+						fc.save(this.plugin.playerFile(player));
 					}
 					catch (IOException e)
 					{
@@ -200,13 +200,13 @@ public class ChatFix implements Listener, CommandExecutor
 					sender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
 					return true;
 				}
-				if (UUIDLibrary.getUUIDFromName(args[0]) == null)
+				if (UUIDFetcher.getUUIDFromName(args[0]) == null)
 				{
 					sender.sendMessage(ChatColor.RED + "Could not find player " + args[0]);
 					return true;
 				}
-				String uuid = UUIDLibrary.getUUIDFromName(args[0]);
-				Player player = Bukkit.getPlayer(UUID.fromString(UUIDLibrary.getUUIDFromName(args[0])));
+				String uuid = UUIDFetcher.getUUIDFromName(args[0]);
+				Player player = Bukkit.getPlayer(UUID.fromString(UUIDFetcher.getUUIDFromName(args[0])));
 				FileConfiguration fc = this.plugin.playerFile(uuid);
 				if (fc.getString("tag") == null)
 				{
@@ -299,13 +299,13 @@ public class ChatFix implements Listener, CommandExecutor
 	public void onJoin(PlayerJoinEvent event)
 	{
 		Player o = event.getPlayer();
-		FileConfiguration fc = this.plugin.playerFile(o);
+		FileConfiguration fc = this.plugin.playerData(o);
 		if ((!Core.permission.getPrimaryGroup(o).equalsIgnoreCase("regular")) && 
 				(this.plugin.getChatMethod2().hasTag(o)) && 
 				(o.hasPermission("lolpvp.settag")))
 		{
 			if ((this.plugin.getChatMethod2().filterTag(o).startsWith("null")) || (this.plugin.getChatMethod2().filterTag(o).contains("&8"))) {
-				this.plugin.getChatMethod().setTag(o, this.plugin.playerFile(o), this.plugin.getChatMethod2().filterTag(o).replace("null", "").replace("&8", ""));
+				this.plugin.getChatMethod().setTag(o, this.plugin.playerData(o), this.plugin.getChatMethod2().filterTag(o).replace("null", "").replace("&8", ""));
 			}
 			this.plugin.getChatMethod2().setPrefix(o);
 		}
@@ -320,7 +320,7 @@ public class ChatFix implements Listener, CommandExecutor
 			fc.set("uuid", o.getUniqueId().toString().replace("-", ""));
 			try
 			{
-				fc.save(this.plugin.playerData(o));
+				fc.save(this.plugin.playerFile(o));
 			}
 			catch (IOException e)
 			{
@@ -341,7 +341,7 @@ public class ChatFix implements Listener, CommandExecutor
 	public void onChat(AsyncPlayerChatEvent event)
 	{
 		Player player = event.getPlayer();
-		FileConfiguration fc = this.plugin.playerFile(player);
+		FileConfiguration fc = this.plugin.playerData(player);
 		String group = Core.permission.getPrimaryGroup(player);
 		String m = event.getMessage();
 		String has = this.plugin.getConfig().getString("groups." + group + ".has-tag");
