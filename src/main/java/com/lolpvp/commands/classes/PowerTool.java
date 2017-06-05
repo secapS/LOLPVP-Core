@@ -38,7 +38,7 @@ public class PowerTool implements CommandExecutor, Listener
 			{
 				FileConfiguration fc;
 				ItemStack it = player.getItemInHand();
-				fc = this.plugin.playerFile(player);
+				fc = this.plugin.playerData(player);
 				if (fc.getConfigurationSection("pt") != null)
 				{
 					if ((it != null) && (!it.getType().equals(Material.AIR))) {
@@ -83,13 +83,13 @@ public class PowerTool implements CommandExecutor, Listener
 					player.sendMessage(ChatColor.RED + "Hold an item.");
 					return true;
 				}
-				FileConfiguration fc = this.plugin.playerFile(player);
+				FileConfiguration fc = this.plugin.playerData(player);
 				if (args.length == 0)
 				{
 					player.sendMessage(ChatColor.GRAY + "Removed powertool from the item in your hand.");
 					fc.set("pt." + player.getItemInHand().getType().name(), null);
 					try {
-						fc.save(this.plugin.playerData(player));
+						fc.save(this.plugin.playerFile(player));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -107,7 +107,7 @@ public class PowerTool implements CommandExecutor, Listener
 				player.sendMessage(ChatColor.GRAY + "Put powertool on " + ChatColor.AQUA + ss + ChatColor.GRAY + " with the command " + ChatColor.AQUA + sb.toString());
 				try
 				{
-					fc.save(this.plugin.playerData(player));
+					fc.save(this.plugin.playerFile(player));
 				}
 				catch (IOException e)
 				{
@@ -116,13 +116,13 @@ public class PowerTool implements CommandExecutor, Listener
 			}
 			else if(commandLabel.equalsIgnoreCase("clearpt"))
 			{
-				FileConfiguration fc = this.plugin.playerFile(player);
+				FileConfiguration fc = this.plugin.playerData(player);
 				
 				if(args.length >= 0)
 				{
 					fc.set("pt", null);
 					try {
-						fc.save(this.plugin.playerData(player));
+						fc.save(this.plugin.playerFile(player));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

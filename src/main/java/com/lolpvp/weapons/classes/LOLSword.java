@@ -53,14 +53,14 @@ public class LOLSword extends BallerItem implements CommandExecutor
                 {
                 	 if (player.getName().startsWith("lolits"))
                      {
-                         if(!this.plugin.playerFile(player).getBoolean("lolsword-taken"))
+                         if(!this.plugin.playerData(player).getBoolean("lolsword-taken"))
                          {
                              ItemManager.getInstance().giveItem(player, this);
                              player.sendMessage(ChatColor.AQUA + "Here is your LOL Sword!");
-                             FileConfiguration fc = this.plugin.playerFile(player);
+                             FileConfiguration fc = this.plugin.playerData(player);
                              fc.set("lolsword-taken", Boolean.valueOf(true));
                              try {
-     							fc.save(this.plugin.playerData(player));
+     							fc.save(this.plugin.playerFile(player));
      						} catch (IOException e) {
      							// TODO Auto-generated catch block
      							e.printStackTrace();
@@ -80,10 +80,10 @@ public class LOLSword extends BallerItem implements CommandExecutor
                 {
                 	if(player.hasPermission("lolpvp.reset-lolsword"))
                 	{
-                		FileConfiguration fc = this.plugin.playerFile(player);
+                		FileConfiguration fc = this.plugin.playerData(player);
                 		fc.set("lolsword-taken", null);
                 		try {
-                			fc.save(this.plugin.playerData(player));
+                			fc.save(this.plugin.playerFile(player));
                 		} catch (IOException e) {
                 			// TODO Auto-generated catch block
                 			e.printStackTrace();
@@ -100,14 +100,14 @@ public class LOLSword extends BallerItem implements CommandExecutor
     public void onPlayerJoin(PlayerJoinEvent e)
     {
         //Add a check for if they have already taken the LOL Sword with a cooldown so they don't keep getting messaged.
-        if (e.getPlayer().getName().startsWith("lolits") && !this.plugin.playerFile(e.getPlayer()).getBoolean("lolsword-taken"))
+        if (e.getPlayer().getName().startsWith("lolits") && !this.plugin.playerData(e.getPlayer()).getBoolean("lolsword-taken"))
         {
         	e.getPlayer().sendMessage(ChatColor.GRAY + "-----------------------");
             e.getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Type /lolsword for a free sword! This is available exclusively for players whose names start with \"lolits\"!");
-            FileConfiguration fc = this.plugin.playerFile(e.getPlayer());
+            FileConfiguration fc = this.plugin.playerData(e.getPlayer());
             fc.set("lolsword-taken", Boolean.valueOf(false));
             try {
-				fc.save(this.plugin.playerData(e.getPlayer()));
+				fc.save(this.plugin.playerFile(e.getPlayer()));
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

@@ -19,7 +19,7 @@ import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import com.lolpvp.core.Core;
-import com.lolpvp.utils.UUIDLibrary;
+import com.lolpvp.utils.UUIDFetcher;
 
 public class ChatMethod
 {
@@ -97,7 +97,7 @@ public class ChatMethod
 			fc.set("tag", tag);
 			try
 			{
-				fc.save(this.plugin.playerData(player));
+				fc.save(this.plugin.playerFile(player));
 			}
 			catch (IOException e)
 			{
@@ -184,7 +184,7 @@ public class ChatMethod
 					fc.set("next-set", finalone);
 					try
 					{
-						fc.save(this.plugin.playerData(player));
+						fc.save(this.plugin.playerFile(player));
 					}
 					catch (IOException e)
 					{
@@ -223,7 +223,7 @@ public class ChatMethod
 	@SuppressWarnings("deprecation")
 	public void setTagOther(CommandSender sender, String s, String tag)
 	{
-		if (UUIDLibrary.getUUIDFromName(s) != null)
+		if (UUIDFetcher.getUUIDFromName(s) != null)
 		{
 			String name;
 			String uuid;
@@ -234,8 +234,8 @@ public class ChatMethod
 			}
 			else
 			{
-				uuid = UUIDLibrary.getUUIDFromName(s);
-				name = UUIDLibrary.getExactName(s);
+				uuid = UUIDFetcher.getUUIDFromName(s);
+				name = UUIDFetcher.getExactName(s);
 			}
 			FileConfiguration fc = this.plugin.playerFile(uuid);
 			if (!tag.matches("[a-zA-Z0-9$+# ]*"))
@@ -271,12 +271,12 @@ public class ChatMethod
 
 	public void removeTag(Player player)
 	{
-		FileConfiguration fc = this.plugin.playerFile(player);
+		FileConfiguration fc = this.plugin.playerData(player);
 		fc.set("tag", null);
 		fc.set("magic", null);
 		try
 		{
-			fc.save(this.plugin.playerData(player));
+			fc.save(this.plugin.playerFile(player));
 		}
 		catch (IOException e)
 		{
@@ -286,13 +286,13 @@ public class ChatMethod
 
 	public void removeTag(CommandSender sender, String s)
 	{
-		if (UUIDLibrary.getUUIDFromName(s) != null)
+		if (UUIDFetcher.getUUIDFromName(s) != null)
 		{
-			String uuid = UUIDLibrary.getUUIDFromName(s);
+			String uuid = UUIDFetcher.getUUIDFromName(s);
 			FileConfiguration fc = this.plugin.playerFile(uuid);
 			fc.set("tag", null);
 			fc.set("magic", null);
-			sender.sendMessage(ChatColor.RED + "Reset " + UUIDLibrary.getExactName(s) + "'s tag.");
+			sender.sendMessage(ChatColor.RED + "Reset " + UUIDFetcher.getExactName(s) + "'s tag.");
 			try
 			{
 				fc.save(this.plugin.playerData(uuid));

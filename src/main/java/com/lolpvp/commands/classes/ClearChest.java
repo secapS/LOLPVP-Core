@@ -96,10 +96,10 @@ public class ClearChest implements CommandExecutor
 				
 //				Bukkit.broadcastMessage(ChatColor.GREEN + "------ Clearing Chest2s ------");
 //				
-//				for(File playerFile : playerFiles)
+//				for(File playerData : playerFiles)
 //				{
-//					String uuid = playerFile.getName().replace(".yml", "");
-//					FileConfiguration fileConfig = plugin.playerFile(uuid);
+//					String uuid = playerData.getName().replace(".yml", "");
+//					FileConfiguration fileConfig = plugin.playerData(uuid);
 //					UUID fixedUUID = UUID.fromString(uuid.substring(0, 8) + "-" + uuid.substring(8, 12) + "-" + uuid.substring(12, 16) + "-" + uuid.substring(16, 20) + "-" + uuid.substring(20));
 //					OfflinePlayer player = Bukkit.getOfflinePlayer(fixedUUID);
 //
@@ -116,7 +116,7 @@ public class ClearChest implements CommandExecutor
 //							{
 //								fileConfig.set("chest", null);
 //								try {
-//									fileConfig.save(playerFile);
+//									fileConfig.save(playerData);
 //								} catch (IOException e) {
 //									// TODO Auto-generated catch block
 //									e.printStackTrace();

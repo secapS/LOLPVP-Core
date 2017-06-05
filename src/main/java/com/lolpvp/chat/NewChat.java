@@ -91,13 +91,13 @@ public class NewChat implements Listener, CommandExecutor
 	
 	public boolean hasNick(Player player)
 	{
-		FileConfiguration fc = this.plugin.playerFile(player);
+		FileConfiguration fc = this.plugin.playerData(player);
 		return fc.getString("nick") != null;
 	}
 	
 	public String getNick(Player player)
 	{
-		FileConfiguration fc = this.plugin.playerFile(player);
+		FileConfiguration fc = this.plugin.playerData(player);
 		return hasNick(player) ? fc.getString("nick") : player.getName();
 	}
 
@@ -123,13 +123,13 @@ public class NewChat implements Listener, CommandExecutor
 						
 						if(player.hasPlayedBefore())
 						{
-							FileConfiguration fc = this.plugin.playerFile(player);
+							FileConfiguration fc = this.plugin.playerData(player);
 							
 							if(fc.getString("nick") != null)
 							{
 								fc.set("nick", null);
 								try {
-									fc.save(this.plugin.playerData(player));
+									fc.save(this.plugin.playerFile(player));
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -151,10 +151,10 @@ public class NewChat implements Listener, CommandExecutor
 						
 						if(player.hasPlayedBefore())
 						{
-							FileConfiguration fc = this.plugin.playerFile(player);
+							FileConfiguration fc = this.plugin.playerData(player);
 							fc.set("nick", args[1]);
 							try {
-								fc.save(this.plugin.playerData(player));
+								fc.save(this.plugin.playerFile(player));
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -326,7 +326,7 @@ public class NewChat implements Listener, CommandExecutor
 //	public boolean canSetTag(Player player)
 //	{
 //		SimpleDateFormat format = new SimpleDateFormat("dd:MM:yyyy:HH:mm:ss");
-//		FileConfiguration fc = this.plugin.playerFile(player);
+//		FileConfiguration fc = this.plugin.playerData(player);
 //		try {
 //			Date d = format.parse(fc.getString("next-set"));
 //			Date date = new Date();

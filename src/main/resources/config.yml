@@ -128,25 +128,25 @@ items:
 # VOTING #
 # ======= #
 
-votestop: "&a{RANK}. &7{NAME}: &a{VOTES}"
+votestop: "&a{RANK}: &7{NAME} &a{VOTES}"
 
 votes:
    2-votes:
-      - "send:&bThanks for voting! Keep it up!"
+      - "msg {PLAYER} Thanks for voting! Keep it up!"
    5-votes:
-      - "give:264;0:1"
+      - "give {PLAYER} 264:0 1"
    10-votes:
-      - "give:264;0:10"
+      - "give {PLAYER} 264:0 10"
    25-votes:
-      - "money:10000"
+      - "money give {PLAYER} 10000"
    50-votes:
-      - "give:264;0:100"
+      - "give {PLAYER} 264:0 100"
    75-votes:
-      - "money:100000"
+      - "money give {PLAYER} 100000"
    100-votes:
-      - "give:322;2:50"
+      - "give {PLAYER} 322:2 50"
    125-votes:
-      - "send:&bEmail support@lolpvp.com to receive your Buycraft voucher!"
+      - "msg {PLAYER} &bEmail support@lolpvp.com to receive your Buycraft voucher!"
 
 set-next-vote: true
 

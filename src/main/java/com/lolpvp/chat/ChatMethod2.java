@@ -20,7 +20,7 @@ public class ChatMethod2
 
 	public String filterTag(Player player)
 	{
-		FileConfiguration fc = this.plugin.playerFile(player);
+		FileConfiguration fc = this.plugin.playerData(player);
 		String tag = fc.getString("tag");
 		if ((!player.hasPermission("lolpvp.owner")) && 
 				(tag.length() > this.plugin.getConfig().getInt("max-normaltag-length"))) {
@@ -46,7 +46,7 @@ public class ChatMethod2
 
 	public boolean hasTag(Player player)
 	{
-		FileConfiguration fc = this.plugin.playerFile(player);
+		FileConfiguration fc = this.plugin.playerData(player);
 		return fc.getString("tag") != null;
 	}
 
