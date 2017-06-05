@@ -1,7 +1,9 @@
 package com.lolpvp.votifier;
+
 import java.io.File;
 import java.io.IOException;
 
+import com.vexsoftware.votifier.model.VotifierEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,11 +22,11 @@ import org.bukkit.inventory.ItemStack;
 import com.lolpvp.core.Core;
 import com.lolpvp.utils.UUIDLibrary;
 
-public class VotifierEvent implements Listener, CommandExecutor
+public class VotifierListener implements Listener, CommandExecutor
 {
 	private Core plugin;
 
-	public VotifierEvent(Core plugin)
+	public VotifierListener(Core plugin)
 	{
 		this.plugin = plugin;
 	}
@@ -161,43 +163,38 @@ public class VotifierEvent implements Listener, CommandExecutor
 		}
 		fc.set("uuid", player.getUniqueId().toString());
 		if (fc.getStringList("pending-command") != null) {
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable()
-			{
-				@SuppressWarnings("deprecation")
-				public void run()
-				{
-					for (String s : fc.getStringList("pending-command"))
-					{
-						String[] parts = s.split(":");
-						if (parts[0].equalsIgnoreCase("give"))
-						{
-							String[] p = parts[1].split(";");
-							int item = Integer.parseInt(p[1]);
-							int data = Integer.parseInt(parts[1]);
-							int amount = Integer.parseInt(parts[2]);
-							ItemStack ii = new ItemStack(Material.getMaterial(item), amount, (short)data);
-							VotifierEvent.this.add(player, ii);
-						}
-						else if (parts[0].equalsIgnoreCase("send"))
-						{
-							player.sendMessage(ChatColor.translateAlternateColorCodes('&', parts[1]));
-						}
-						else if (parts[0].equalsIgnoreCase("money"))
-						{
-							Core.getEconomy().depositPlayer(player, Double.parseDouble(parts[1]));
-						}
-					}
-					fc.set("pending-command", null);
-					try
-					{
-						fc.save(VotifierEvent.this.plugin.playerData(event.getPlayer()));
-					}
-					catch (IOException exception)
-					{
-						exception.printStackTrace();
-					}
-				}
-			}, 40L);
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, () -> {
+                for (String s : fc.getStringList("pending-command"))
+                {
+                    String[] parts = s.split(":");
+                    if (parts[0].equalsIgnoreCase("give"))
+                    {
+                        String[] p = parts[1].split(";");
+                        int item = Integer.parseInt(p[1]);
+                        int data = Integer.parseInt(parts[1]);
+                        int amount = Integer.parseInt(parts[2]);
+                        ItemStack ii = new ItemStack(Material.getMaterial(item), amount, (short)data);
+                        VotifierListener.this.add(player, ii);
+                    }
+                    else if (parts[0].equalsIgnoreCase("send"))
+                    {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', parts[1]));
+                    }
+                    else if (parts[0].equalsIgnoreCase("money"))
+                    {
+                        Core.getEconomy().depositPlayer(player, Double.parseDouble(parts[1]));
+                    }
+                }
+                fc.set("pending-command", null);
+                try
+                {
+                    fc.save(VotifierListener.this.plugin.playerData(event.getPlayer()));
+                }
+                catch (IOException exception)
+                {
+                    exception.printStackTrace();
+                }
+            }, 40L);
 		}
 		try
 		{
@@ -209,47 +206,19 @@ public class VotifierEvent implements Listener, CommandExecutor
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public void load(String name)
 	{
 		FileConfiguration fc = this.plugin.playerFile(UUIDLibrary.getUUIDFromName(name));
-		if (fc.getString("votes") == null)
-		{
+		if (fc.get("votes") == null) {
 			fc.set("votes", Integer.valueOf(1));
 		}
-		else
-		{
+		else {
 			this.plugin.getVotesTop().votes.put(name, Integer.valueOf(fc.getInt("votes") + 1));
 			fc.set("votes", Integer.valueOf(fc.getInt("votes") + 1));
 		}
-		if (this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes") != null)
-		{
+		if (this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes") != null) {
 			Player player = Bukkit.getServer().getPlayer(name);
-			if (player != null) {
-				for (String s : this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes"))
-				{
-					String[] parts = s.split(":");
-					if (parts[0].equalsIgnoreCase("give"))
-					{
-						String[] p = parts[1].split(";");
-						int item = Integer.parseInt(p[0]);
-						int data = Integer.parseInt(p[1]);
-						int amount = Integer.parseInt(parts[2]);
-						ItemStack ii = new ItemStack(Material.getMaterial(item), amount, (short)data);
-						add(player, ii);
-					}
-					else if (parts[0].equalsIgnoreCase("send"))
-					{
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', parts[1]));
-					}
-					else if (parts[0].equalsIgnoreCase("money"))
-					{
-						Core.getEconomy().depositPlayer(player, Double.parseDouble(parts[1]));
-					}
-				}
-			} else {
-				fc.set("pending-command", this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes"));
-			}
+			giveReward(player);
 		}
 		try
 		{
@@ -261,8 +230,20 @@ public class VotifierEvent implements Listener, CommandExecutor
 		}
 	}
 
+	private void giveReward(Player player) {
+        FileConfiguration fc = this.plugin.playerFile(UUIDLibrary.getUUIDFromName(player.getName()));
+        if (player != null) {
+            for (String rewardCommands : this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes")) {
+                String command = rewardCommands.replace("{PLAYER}", player.getName());
+                this.plugin.getServer().dispatchCommand(this.plugin.getServer().getConsoleSender(), command);
+            }
+        } else {
+            fc.set("pending-command", this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes"));
+        }
+    }
+
 	@EventHandler(priority=EventPriority.NORMAL)
-	public void onVote(com.vexsoftware.votifier.model.VotifierEvent event)
+	public void onVote(VotifierEvent event)
 	{
 		load(event.getVote().getUsername());
 	}

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -7,6 +8,18 @@
     <groupId>com.lolpvp</groupId>
     <artifactId>core</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <repositories>
         <repository>
@@ -20,15 +33,9 @@
         </repository>
 
         <repository>
-            <id>votifier-repo</id>
-            <url>http://repo.howaner.de</url>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
-
-        <repository>
-            <id>essentials-repo</id>
-            <url>https://ci.drtshock.net/plugin/repository/everything/</url>
-        </repository>
-
     </repositories>
 
     <dependencies>
@@ -47,17 +54,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.vexsoftware</groupId>
-            <artifactId>votifier</artifactId>
-            <version>1.9</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.ess3</groupId>
-            <artifactId>Essentials</artifactId>
-            <version>LATEST</version>
+            <groupId>com.github.NuVotifier</groupId>
+            <artifactId>NuVotifier</artifactId>
+            <version>master-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
 </project>

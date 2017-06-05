@@ -50,7 +50,7 @@ import com.lolpvp.virtualchest.VirtualChest;
 import com.lolpvp.virtualchest.VirtualChestListener;
 import com.lolpvp.virtualchest.VirtualChestManager;
 import com.lolpvp.votifier.VotesTop;
-import com.lolpvp.votifier.VotifierEvent;
+import com.lolpvp.votifier.VotifierListener;
 import com.lolpvp.weapons.ItemManager;
 import com.lolpvp.weapons.classes.InvisRing;
 import com.lolpvp.weapons.classes.LOLSword;
@@ -69,7 +69,7 @@ public class Core extends JavaPlugin implements Listener
 	private ChatFix chatFix;	
 	public static Chat chat = null;
 	private VotesTop votestop = null;
-	private VotifierEvent votifierEvent = null;
+	private VotifierListener votifierListener = null;
 	public static Permission permission = null;
 	public MuteAll muteAll = null;
 	
@@ -90,7 +90,7 @@ public class Core extends JavaPlugin implements Listener
 		new UUIDLibrary(this);
 		muteAll = new MuteAll(this);
 		votestop = new VotesTop(this);
-		votifierEvent = new VotifierEvent(this);
+		votifierListener = new VotifierListener(this);
 		chatFix = new ChatFix(this);
 		chatmethod = new ChatMethod(this);
 		chatmethod2 = new ChatMethod2(this);
@@ -114,7 +114,7 @@ public class Core extends JavaPlugin implements Listener
 		this.getServer().getPluginManager().registerEvents(this.chatFix, this);
 		
 //		this.getServer().getPluginManager().registerEvents(this.newChat, this);
-		this.getServer().getPluginManager().registerEvents(this.votifierEvent, this);
+		this.getServer().getPluginManager().registerEvents(this.votifierListener, this);
 		this.getServer().getPluginManager().registerEvents(new BallerSign(), this);
 		this.getServer().getPluginManager().registerEvents(new AntiSpamBot(this), this);
 		this.getServer().getPluginManager().registerEvents(muteAll, this);
@@ -147,8 +147,8 @@ public class Core extends JavaPlugin implements Listener
 		this.getCommand("lolm").setExecutor(this.chatFix);
 		
 		this.getCommand("who").setExecutor(new Who(this));
-		this.getCommand("votes").setExecutor(this.votifierEvent);
-		this.getCommand("resetvotes").setExecutor(this.votifierEvent);
+		this.getCommand("votes").setExecutor(this.votifierListener);
+		this.getCommand("resetvotes").setExecutor(this.votifierListener);
 		this.getCommand("ballersign").setExecutor(new BallerSign());
 		this.getCommand("clearchat").setExecutor(new ClearChat(this));
 		this.getCommand("muteall").setExecutor(muteAll);
