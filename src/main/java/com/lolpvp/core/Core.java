@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import co.aikar.commands.ACF;
+import co.aikar.commands.CommandManager;
+import com.lolpvp.votifier.VotesCommand;
+import com.lolpvp.votifier.VotesManager;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -46,11 +50,9 @@ import com.lolpvp.signs.BallerSign;
 import com.lolpvp.signs.BuySigns;
 import com.lolpvp.signs.SignSettingsManager;
 import com.lolpvp.utils.AntiSpamBot;
-import com.lolpvp.utils.UUIDFetcher;
 import com.lolpvp.virtualchest.VirtualChest;
 import com.lolpvp.virtualchest.VirtualChestListener;
 import com.lolpvp.virtualchest.VirtualChestManager;
-import com.lolpvp.votifier.VotesTop;
 import com.lolpvp.votifier.VotifierListener;
 import com.lolpvp.weapons.ItemManager;
 import com.lolpvp.weapons.classes.InvisRing;
@@ -69,8 +71,8 @@ public class Core extends JavaPlugin implements Listener
 	private ChatMethod2 chatmethod2;
 	private ChatFix chatFix;	
 	public static Chat chat = null;
-	private VotesTop votestop = null;
-	private VotifierListener votifierListener = null;
+	private VotesManager votesManager = null;
+	public VotifierListener votifierListener = null;
 	public static Permission permission = null;
 	public MuteAll muteAll = null;
 	
@@ -78,18 +80,20 @@ public class Core extends JavaPlugin implements Listener
 	
 	private static Core instance;
 	
-	
+	private CommandManager commandManager;
 //	private NewChat newChat = null;
 	
 	@Override
 	public void onEnable()
 	{
 		instance = this;
+        commandManager = ACF.createManager(this);
+        registerCommands();
 		PerkBookManager.setup();
 		ItemManager.setup(this);
 		this.setupChat();
 		muteAll = new MuteAll(this);
-		votestop = new VotesTop(this);
+		votesManager = new VotesManager(this);
 		votifierListener = new VotifierListener(this);
 		chatFix = new ChatFix(this);
 		chatmethod = new ChatMethod(this);
@@ -168,15 +172,19 @@ public class Core extends JavaPlugin implements Listener
 		this.getServer().getPluginManager().registerEvents(this, this);
 		
 	}
-	
+
+    @Override
+    public void onDisable()
+    {
+        ItemManager.getInstance().getItems().clear();
+    }
+
+    private void registerCommands() {
+        this.commandManager.registerCommand(new VotesCommand(this));
+    }
+
 	public static Core getInstance() {
 		return instance;
-	}
-
-	@Override
-	public void onDisable()
-	{
-		ItemManager.getInstance().getItems().clear();
 	}
 
 	private static WorldGuardPlugin getWorldGuard() {
@@ -230,9 +238,9 @@ public class Core extends JavaPlugin implements Listener
 		return true;
 	}
 
-	public VotesTop getVotesTop()
+	public VotesManager getVotesManager()
 	{
-		return this.votestop;
+		return this.votesManager;
 	}
 
 	public ChatMethod getChatMethod()

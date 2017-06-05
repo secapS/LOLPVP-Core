@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.SortedMap;
+import java.util.UUID;
 import java.util.logging.Level;
 
 @CommandAlias("votes")
@@ -53,7 +56,16 @@ public class VotesCommand extends BaseCommand {
     @Subcommand("top|t")
     @CommandPermission("lolpvp.votes.top")
     public void onVotesTop(Player player) {
-        this.plugin.getVotesTop().onSort(player);
+        SortedMap<UUID, Integer> sortedMap = this.plugin.getVotesManager().sortVotes();
+        int rank = 1;
+        for(UUID votedPlayers : sortedMap.keySet()) {
+            String message = ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("votestop")
+                    .replaceAll("\\{RANK}", Integer.valueOf(rank).toString())
+                    .replaceAll("\\{PLAYER}", this.plugin.getServer().getOfflinePlayer(votedPlayers).getName())
+                    .replaceAll("\\{VOTES}", sortedMap.get(votedPlayers).toString()));
+            player.sendMessage(message);
+            rank++;
+        }
     }
 
     @Subcommand("reset")
@@ -62,17 +74,17 @@ public class VotesCommand extends BaseCommand {
         player.sendMessage(ChatColor.GREEN + "Everyone's votes has been reset.");
         File users = new File(this.plugin.getDataFolder(), "userdata");
         if (users.exists()) {
-            for (File file : users.listFiles()) {
+            Arrays.stream(users.listFiles()).forEach( file -> {
                 YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+                config.set("votes", Integer.valueOf(0));
+                config.set("pending-commands", null);
                 try {
-                    config.set("votes", Integer.valueOf(0));
-                    config.set("pending-commands", null);
                     config.save(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    this.plugin.getLogger().log(Level.WARNING, "Couldn't save " + player.getName() + "'s data file.");
                 }
-                catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
+            });
         }
     }
 }
