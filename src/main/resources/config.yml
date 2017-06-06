@@ -131,22 +131,38 @@ items:
 votestop: "&a{RANK}: &7{NAME} &a{VOTES}"
 
 votes:
+   format: "&a{VOTEAMOUNT} &7votes: &a{REWARD}"
    2-votes:
-      - "msg {PLAYER} Thanks for voting! Keep it up!"
+      commands:
+          - "msg {PLAYER} Thanks for voting! Keep it up!"
    5-votes:
-      - "give {PLAYER} 264:0 1"
+      reward: "1 diamond."
+      commands:
+          - "give {PLAYER} 264:0 1"
    10-votes:
-      - "give {PLAYER} 264:0 10"
+      reward: "10 diamonds."
+      commands:
+          - "give {PLAYER} 264:0 10"
    25-votes:
-      - "money give {PLAYER} 10000"
+      reward: "10,000 ingame money."
+      commands:
+          - "money give {PLAYER} 10000"
    50-votes:
-      - "give {PLAYER} 264:0 100"
+      reward: "100 diamonds."
+      commands:
+          - "give {PLAYER} 264:0 100"
    75-votes:
-      - "money give {PLAYER} 100000"
+      reward: "100,000 ingame money."
+      commands:
+          - "money give {PLAYER} 100000"
    100-votes:
-      - "give {PLAYER} 322:2 50"
+      reward: "50 OP apples."
+      commands:
+          - "give {PLAYER} 322:2 50"
    125-votes:
-      - "msg {PLAYER} &bEmail support@lolpvp.com to receive your Buycraft voucher!"
+      reward: "$25 Buycraft donation voucher."
+      commands:
+          - "msg {PLAYER} &bEmail support@lolpvp.com to receive your Buycraft voucher!"
 
 set-next-vote: true
 

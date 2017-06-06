@@ -86,15 +86,17 @@ public class Core extends JavaPlugin implements Listener
 	@Override
 	public void onEnable()
 	{
-		instance = this;
-        commandManager = ACF.createManager(this);
+	    instance = this;
+	    commandManager = ACF.createManager(this);
         registerCommands();
-		PerkBookManager.setup();
+        votesManager = new VotesManager(this);
+        this.getServer().getPluginManager().registerEvents(new VotifierListener(this), this);
+
+        //Old Stuff
+        PerkBookManager.setup();
 		ItemManager.setup(this);
 		this.setupChat();
 		muteAll = new MuteAll(this);
-		votesManager = new VotesManager(this);
-		votifierListener = new VotifierListener(this);
 		chatFix = new ChatFix(this);
 		chatmethod = new ChatMethod(this);
 		chatmethod2 = new ChatMethod2(this);
@@ -118,7 +120,6 @@ public class Core extends JavaPlugin implements Listener
 		this.getServer().getPluginManager().registerEvents(this.chatFix, this);
 		
 //		this.getServer().getPluginManager().registerEvents(this.newChat, this);
-		this.getServer().getPluginManager().registerEvents(this.votifierListener, this);
 		this.getServer().getPluginManager().registerEvents(new BallerSign(), this);
 		this.getServer().getPluginManager().registerEvents(new AntiSpamBot(this), this);
 		this.getServer().getPluginManager().registerEvents(muteAll, this);
