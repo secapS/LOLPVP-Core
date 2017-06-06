@@ -46,6 +46,7 @@ public class VotifierListener implements Listener {
                 }
                 catch (IOException exception) {
                     exception.printStackTrace();
+                    this.plugin.getLogger().log(Level.WARNING, "Couldn't save " + event.getPlayer().getName() + "'s player data.");
                 }
             }, 40L);
 		}

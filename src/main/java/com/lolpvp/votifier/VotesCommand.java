@@ -42,6 +42,10 @@ public class VotesCommand extends BaseCommand {
             playerData = this.plugin.playerData(offlinePlayer);
         } else {
             playerData = this.plugin.playerData(player);
+            for(String voteAmount : this.plugin.getConfig().getConfigurationSection("votes").getKeys(false)) {
+                String amount = voteAmount.split("-")[0];
+
+            }
             player.sendMessage(ChatColor.AQUA + "10" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "10 diamonds.");
             player.sendMessage(ChatColor.AQUA + "25" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "$10,000 ingame money.");
             player.sendMessage(ChatColor.AQUA + "50" + ChatColor.GRAY + " votes: " + ChatColor.AQUA + "100 diamonds.");
@@ -60,9 +64,9 @@ public class VotesCommand extends BaseCommand {
         int rank = 1;
         for(UUID votedPlayers : sortedMap.keySet()) {
             String message = ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("votestop")
-                    .replaceAll("\\{RANK}", Integer.valueOf(rank).toString())
-                    .replaceAll("\\{PLAYER}", this.plugin.getServer().getOfflinePlayer(votedPlayers).getName())
-                    .replaceAll("\\{VOTES}", sortedMap.get(votedPlayers).toString()));
+                    .replace("{RANK}", Integer.valueOf(rank).toString())
+                    .replace("{PLAYER}", this.plugin.getServer().getOfflinePlayer(votedPlayers).getName())
+                    .replace("{VOTES}", sortedMap.get(votedPlayers).toString()));
             player.sendMessage(message);
             rank++;
         }

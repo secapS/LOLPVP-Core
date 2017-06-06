@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
 
 public class VotesManager {
 
@@ -28,25 +29,27 @@ public class VotesManager {
             fc.set("votes", Integer.valueOf(fc.getInt("votes") + 1));
         }
         if (this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes") != null) {
-            Player player = Bukkit.getServer().getPlayer(uuid);
-            giveReward(player);
+            giveReward(this.plugin.getServer().getPlayer(uuid));
         }
         try {
             fc.save(this.plugin.playerFile(uuid));
         } catch (IOException e) {
             e.printStackTrace();
+            this.plugin.getLogger().log(Level.WARNING, "Couldn't save " + this.plugin.getServer().getOfflinePlayer(uuid).getName() + "'s player data.");
         }
     }
 
     protected void giveReward(Player player) {
         FileConfiguration fc = this.plugin.playerData(player.getUniqueId());
         if (player != null) {
-            for (String rewardCommands : this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes")) {
-                String command = rewardCommands.replace("{PLAYER}", player.getName());
-                this.plugin.getServer().dispatchCommand(this.plugin.getServer().getConsoleSender(), command);
+            if(this.plugin.getConfig().getConfigurationSection("votes." + fc.getInt("votes") + "-votes") != null) {
+                for (String rewardCommands : this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes.commands")) {
+                    String command = rewardCommands.replace("{PLAYER}", player.getName());
+                    this.plugin.getServer().dispatchCommand(this.plugin.getServer().getConsoleSender(), command);
+                }
             }
         } else {
-            fc.set("pending-command", this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes"));
+            fc.set("pending-command", this.plugin.getConfig().getStringList("votes." + fc.getInt("votes") + "-votes.commands"));
         }
     }
 
