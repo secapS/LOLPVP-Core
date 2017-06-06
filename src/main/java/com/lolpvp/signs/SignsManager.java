@@ -4,6 +4,7 @@ import com.lolpvp.core.Core;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -16,21 +17,21 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
-public class SignManager {
+public class SignsManager {
 
     private FileConfiguration signsData;
     private File signsFile;
     private Core plugin;
 
-    public SignManager(Core instance) {
+    public SignsManager(Core instance) {
         this.plugin = instance;
-        signsFile = new File(instance.getDataFolder() + "signs.yml");
+        signsFile = new File(instance.getDataFolder(), "signs.yml");
         if(!signsFile.exists()) {
             try {
                 signsFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
-                instance.getLogger().log(Level.WARNING,"Couldn't create signs.yml");
+                instance.getLogger().log(Level.WARNING, "Couldn't create signs.yml");
             }
         }
         signsData = YamlConfiguration.loadConfiguration(signsFile);
@@ -41,7 +42,7 @@ public class SignManager {
     }
 
     public void createCommandSign(Sign sign, List<String> commands, int price) {
-        String id = UUID.randomUUID().toString()
+        String id = UUID.randomUUID().toString();
         sign.setMetadata("commandsign-id", new FixedMetadataValue(this.plugin, id));
         if(price > 0) {
             sign.setMetadata("commandsign-price", new FixedMetadataValue(this.plugin, price));
@@ -90,6 +91,28 @@ public class SignManager {
             return x == sign.getX() && y == sign.getY() && z == sign.getZ();
         }
         return false;
+    }
+
+    public void saveSignData() {
+        try {
+            this.signsData.save(this.signsFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.plugin.getLogger().log(Level.WARNING, "Couldn't save signs.yml");
+        }
+    }
+
+    public void reloadSignData() {
+        this.saveSignData();
+        try {
+            this.signsData.load(this.signsFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.plugin.getLogger().log(Level.WARNING, "Couldn't load signs.yml");
+        } catch (InvalidConfigurationException e) {
+            e.printStackTrace();
+            this.plugin.getLogger().log(Level.WARNING, "Couldn't load signs.yml");
+        }
     }
 
 }
