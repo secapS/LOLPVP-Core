@@ -46,7 +46,6 @@ import com.lolpvp.commands.trade.TradeCommand;
 import com.lolpvp.commands.trade.TradeManager;
 import com.lolpvp.redeemer.PerkBookCommand;
 import com.lolpvp.redeemer.PerkBookManager;
-import com.lolpvp.signs.BallerSign;
 import com.lolpvp.signs.BuySigns;
 import com.lolpvp.signs.SignSettingsManager;
 import com.lolpvp.utils.AntiSpamBot;
@@ -87,10 +86,17 @@ public class Core extends JavaPlugin implements Listener
 	public void onEnable()
 	{
 	    instance = this;
+
+	    //Commands
 	    commandManager = ACF.createManager(this);
         registerCommands();
+
+        //Votes
         votesManager = new VotesManager(this);
         this.getServer().getPluginManager().registerEvents(new VotifierListener(this), this);
+
+        //Shop signs
+
 
         //Old Stuff
         PerkBookManager.setup();
@@ -120,7 +126,6 @@ public class Core extends JavaPlugin implements Listener
 		this.getServer().getPluginManager().registerEvents(this.chatFix, this);
 		
 //		this.getServer().getPluginManager().registerEvents(this.newChat, this);
-		this.getServer().getPluginManager().registerEvents(new BallerSign(), this);
 		this.getServer().getPluginManager().registerEvents(new AntiSpamBot(this), this);
 		this.getServer().getPluginManager().registerEvents(muteAll, this);
 		this.getCommand("lol").setExecutor(new LOLPVPCommand());
@@ -152,7 +157,6 @@ public class Core extends JavaPlugin implements Listener
 		this.getCommand("lolm").setExecutor(this.chatFix);
 		
 		this.getCommand("who").setExecutor(new Who(this));
-		this.getCommand("ballersign").setExecutor(new BallerSign());
 		this.getCommand("clearchat").setExecutor(new ClearChat(this));
 		this.getCommand("muteall").setExecutor(muteAll);
 		this.getCommand("redeem").setExecutor(new PerkBookCommand());
