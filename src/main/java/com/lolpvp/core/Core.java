@@ -8,6 +8,7 @@ import java.util.logging.Level;
 
 import co.aikar.commands.ACF;
 import co.aikar.commands.CommandManager;
+import com.lolpvp.signs.SignsListener;
 import com.lolpvp.signs.SignsManager;
 import com.lolpvp.votifier.VotesCommand;
 import com.lolpvp.votifier.VotesManager;
@@ -103,6 +104,8 @@ public class Core extends JavaPlugin implements Listener
 
         //Command signs
         this.signsManager = new SignsManager(this);
+        this.getServer().getPluginManager().registerEvents(new SignsListener(this), this);
+        this.signsManager.loadSigns();
 
         //Old Stuff
         PerkBookManager.setup();

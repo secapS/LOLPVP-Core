@@ -3,6 +3,8 @@ package com.lolpvp.signs;
 import com.lolpvp.core.Core;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -46,7 +48,7 @@ public class SignsManager {
         sign.setMetadata("commandsign-id", new FixedMetadataValue(this.plugin, id));
         if(price > 0) {
             sign.setMetadata("commandsign-price", new FixedMetadataValue(this.plugin, price));
-            signsData.set(id + ".price", price);
+            this.signsData.set(id + ".price", price);
         }
         StringBuilder commandsString = new StringBuilder();
         commands.forEach(command -> {
@@ -57,8 +59,12 @@ public class SignsManager {
             }
         });
         sign.setMetadata("commandsign-commands", new FixedMetadataValue(this.plugin, commandsString.toString()));
-        signsData.set(id + ".commands", commands);
+        this.signsData.set(id + ".commands", commands);
 
+        this.signsData.set(id + ".world", sign.getWorld().getName());
+        this.signsData.set(id + ".x", sign.getLocation().getX());
+        this.signsData.set(id + ".y", sign.getLocation().getY());
+        this.signsData.set(id + ".z", sign.getLocation().getZ());
     }
 
     public void removeCommandSign(Sign sign) {
@@ -83,7 +89,41 @@ public class SignsManager {
         });
     }
 
+    public void loadSigns() {
+        for(World worlds : this.plugin.getServer().getWorlds()) {
+            for(String signs : this.signsData.getKeys(false)) {
+                if(worlds.getName().equals(this.signsData.getString(signs + ".world"))) {
+                    int x = (int)this.signsData.getDouble(signs + ".x");
+                    int y = (int)this.signsData.getDouble(signs + ".y");
+                    int z = (int)this.signsData.getDouble(signs + ".z");
+                    Block block = worlds.getBlockAt(x, y, z);
+                    if(block.getState() instanceof Sign && isCommandSign((Sign)block.getState())) {
+                        loadSign(UUID.fromString(signs), (Sign)block.getState());
+                    }
+                }
+            }
+        }
+    }
+
+    private void loadSign(UUID uuid, Sign sign) {
+        sign.setMetadata("commandsign-id", new FixedMetadataValue(this.plugin, uuid.toString()));
+        if(this.signsData.get(uuid.toString() + ".price") != null) {
+            sign.setMetadata("commandsign-price", new FixedMetadataValue(this.plugin, this.signsData.getInt(uuid.toString() + ".price")));
+        }
+        List<String> commands = this.signsData.getStringList(uuid.toString() + ".commands");
+        StringBuilder commandsString = new StringBuilder();
+        commands.forEach(command -> {
+            if(command == commands.get(commands.size() - 1)) {
+                commandsString.append(command);
+            } else {
+                commandsString.append(command + "|");
+            }
+        });
+        sign.setMetadata("commandsign-commands", new FixedMetadataValue(this.plugin, commandsString.toString()));
+    }
+
     public boolean isCommandSign(Sign sign) {
+        if(sign.hasMetadata("commandsign-id")) return true;
         for(String signs : signsData.getKeys(false)) {
             double x = this.signsData.getDouble(signs + ".x");
             double y = this.signsData.getDouble(signs + ".y");

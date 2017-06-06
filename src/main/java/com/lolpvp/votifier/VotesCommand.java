@@ -3,6 +3,7 @@ package com.lolpvp.votifier;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.lolpvp.core.Core;
+import com.lolpvp.core.Permissions;
 import com.lolpvp.utils.UUIDFetcher;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -28,7 +29,7 @@ public class VotesCommand extends BaseCommand {
 
 
     @Default
-    @CommandPermission("lolpvp.votes")
+    @CommandPermission(Permissions.VOTES)
     public void onDefault(Player player, @Optional String otherPlayer) {
         FileConfiguration playerData;
         OfflinePlayer offlinePlayer = null;
@@ -38,7 +39,7 @@ public class VotesCommand extends BaseCommand {
             e.printStackTrace();
             this.plugin.getLogger().log(Level.WARNING, "Couldn't find UUID of the Username: " + otherPlayer);
         }
-        if(otherPlayer != null && player.hasPermission("lolpvp.votes.others") && offlinePlayer != null) {
+        if(otherPlayer != null && player.hasPermission(Permissions.VOTES_OTHERS) && offlinePlayer != null) {
             playerData = this.plugin.playerData(offlinePlayer);
         } else {
             playerData = this.plugin.playerData(player);
@@ -58,7 +59,7 @@ public class VotesCommand extends BaseCommand {
     }
 
     @Subcommand("top|t")
-    @CommandPermission("lolpvp.votes.top")
+    @CommandPermission(Permissions.VOTES_TOP)
     public void onVotesTop(Player player) {
         SortedMap<UUID, Integer> sortedMap = this.plugin.getVotesManager().sortVotes();
         int rank = 1;
@@ -73,7 +74,7 @@ public class VotesCommand extends BaseCommand {
     }
 
     @Subcommand("reset")
-    @CommandPermission("")
+    @CommandPermission(Permissions.VOTES_RESET)
     public void onResetVotes(Player player) {
         player.sendMessage(ChatColor.GREEN + "Everyone's votes has been reset.");
         File users = new File(this.plugin.getDataFolder(), "userdata");

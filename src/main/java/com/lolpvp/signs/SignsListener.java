@@ -5,6 +5,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class SignsListener implements Listener {
@@ -23,6 +24,16 @@ public class SignsListener implements Listener {
                 if(this.plugin.getSignsManager().isCommandSign(sign)) {
                     this.plugin.getSignsManager().executeSignCommands(sign, event.getPlayer());
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        if(event.getBlock().getState() instanceof Sign) {
+            Sign sign = (Sign)event.getBlock().getState();
+            if(this.plugin.getSignsManager().isCommandSign(sign) && event.getPlayer().hasPermission("")) {
+                this.plugin.getSignsManager().removeCommandSign(sign);
             }
         }
     }
