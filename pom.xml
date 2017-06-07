@@ -33,6 +33,11 @@
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
+
+        <repository>
+            <id>stealthyone-repo</id>
+            <url>http://repo.stealthyone.com/content/groups/public</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -75,6 +80,12 @@
             <artifactId>worldedit</artifactId>
             <version>6.0.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>mkremins</groupId>
+            <artifactId>fanciful</artifactId>
+            <version>0.4.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -98,6 +109,8 @@
                         <relocation>
                             <pattern>co.aikar.commands</pattern>
                             <shadedPattern>com.lolpvp.acf</shadedPattern>
+                            <pattern>mkremins.fanciful</pattern>
+                            <shadedPattern>com.lolpvp.fanciful</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

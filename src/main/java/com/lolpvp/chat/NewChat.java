@@ -18,7 +18,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.earth2me.essentials.Essentials;
 import com.lolpvp.core.Core;
-import com.lolpvp.utils.FancyMessage;
 
 public class NewChat implements Listener, CommandExecutor
 {

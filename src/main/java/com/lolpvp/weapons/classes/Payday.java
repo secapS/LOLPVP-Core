@@ -29,7 +29,6 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.lolpvp.core.Core;
-import com.lolpvp.utils.FancyMessage;
 import com.lolpvp.weapons.BallerItem;
 import com.lolpvp.weapons.ItemManager;
 
