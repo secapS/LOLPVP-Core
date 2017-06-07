@@ -123,12 +123,10 @@ public class Core extends JavaPlugin implements Listener
 		getConfig().options().copyDefaults(true);
 		saveDefaultConfig();
 		reloadConfig();
-		SignSettingsManager.getInstance().setup(this);
 		this.getServer().getPluginManager().registerEvents(this, this);
 		this.getServer().getPluginManager().registerEvents(new ChestListener(this), this);
 		this.getServer().getPluginManager().registerEvents(new VirtualChestListener(), this);
 		this.getServer().getPluginManager().registerEvents(new PowerTool(this), this);
-		this.getServer().getPluginManager().registerEvents(new BuySigns(this), this);
 		this.getServer().getPluginManager().registerEvents(this.chatFix, this);
 		
 //		this.getServer().getPluginManager().registerEvents(this.newChat, this);
@@ -145,7 +143,6 @@ public class Core extends JavaPlugin implements Listener
 		this.getCommand("clearchest2").setExecutor(new VirtualChest(this));
 		this.getCommand("pt").setExecutor(new PowerTool(this));
 		this.getCommand("clearpt").setExecutor(new PowerTool(this));
-		this.getCommand("qf").setExecutor(new BuySigns(this));
 //		this.getCommand("lolt").setExecutor(newChat);
 		
 		this.getCommand("lolt").setExecutor(this.chatFix);
