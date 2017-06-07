@@ -39,27 +39,15 @@ public class SignsManager {
         signsData = YamlConfiguration.loadConfiguration(signsFile);
     }
 
-    public void createCommandSign(Sign sign, List<String> commands) {
-        createCommandSign(sign, commands, 0);
-    }
-
-    public void createCommandSign(Sign sign, List<String> commands, int price) {
+    public void createCommandSign(Sign sign, String command, int price) {
         String id = UUID.randomUUID().toString();
         sign.setMetadata("commandsign-id", new FixedMetadataValue(this.plugin, id));
         if(price > 0) {
             sign.setMetadata("commandsign-price", new FixedMetadataValue(this.plugin, price));
             this.signsData.set(id + ".price", price);
         }
-        StringBuilder commandsString = new StringBuilder();
-        commands.forEach(command -> {
-            if(command == commands.get(commands.size() - 1)) {
-                commandsString.append(command);
-            } else {
-                commandsString.append(command + "|");
-            }
-        });
-        sign.setMetadata("commandsign-commands", new FixedMetadataValue(this.plugin, commandsString.toString()));
-        this.signsData.set(id + ".commands", commands);
+        sign.setMetadata("commandsign-commands", new FixedMetadataValue(this.plugin, command));
+        this.signsData.set(id + ".commands", command);
 
         this.signsData.set(id + ".world", sign.getWorld().getName());
         this.signsData.set(id + ".x", sign.getLocation().getX());
@@ -83,10 +71,14 @@ public class SignsManager {
                 return;
             }
         }
-        String[] commands = sign.getMetadata("commandsign-commands").get(0).asString().split("|");
-        Arrays.stream(commands).forEach(command -> {
-            this.plugin.getServer().dispatchCommand(this.plugin.getServer().getConsoleSender(), command);
-        });
+        sign.getMetadata("commandsign-commands").forEach(command -> this.plugin.getServer().dispatchCommand(this.plugin.getServer().getConsoleSender(), command.asString()));
+    }
+
+    public void addCommandToSign(Sign sign, String command) {
+        if(isCommandSign(sign)) {
+            sign.setMetadata("commandsign-commands", new FixedMetadataValue(this.plugin, command));
+            this.signsData.getStringList(sign.getMetadata("commandsign-id").get(0).asString() + ".commands").add(command);
+        }
     }
 
     public void loadSigns() {

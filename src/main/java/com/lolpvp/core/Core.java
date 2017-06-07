@@ -8,8 +8,7 @@ import java.util.logging.Level;
 
 import co.aikar.commands.ACF;
 import co.aikar.commands.CommandManager;
-import com.lolpvp.signs.SignsListener;
-import com.lolpvp.signs.SignsManager;
+import com.lolpvp.signs.*;
 import com.lolpvp.votifier.VotesCommand;
 import com.lolpvp.votifier.VotesManager;
 import net.milkbowl.vault.chat.Chat;
@@ -48,8 +47,6 @@ import com.lolpvp.commands.trade.TradeCommand;
 import com.lolpvp.commands.trade.TradeManager;
 import com.lolpvp.redeemer.PerkBookCommand;
 import com.lolpvp.redeemer.PerkBookManager;
-import com.lolpvp.signs.BuySigns;
-import com.lolpvp.signs.SignSettingsManager;
 import com.lolpvp.utils.AntiSpamBot;
 import com.lolpvp.virtualchest.VirtualChest;
 import com.lolpvp.virtualchest.VirtualChestListener;
@@ -195,6 +192,7 @@ public class Core extends JavaPlugin implements Listener
 
     private void registerCommands() {
         this.commandManager.registerCommand(new VotesCommand(this));
+        this.commandManager.registerCommand(new SignsCommand(this));
     }
 
     public VotesManager getVotesManager()

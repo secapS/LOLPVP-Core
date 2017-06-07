@@ -11,7 +11,8 @@ public class Permissions {
 
     public static final String SIGNS = PREFIX + "signs",
             SIGNS_CREATE = SIGNS + ".create",
-            SIGNS_DESTROY = SIGNS + ".destroy";
+            SIGNS_DESTROY = SIGNS + ".destroy",
+            SIGNS_ADD_COMMAND = SIGNS + "add-command";
 
 
 }
