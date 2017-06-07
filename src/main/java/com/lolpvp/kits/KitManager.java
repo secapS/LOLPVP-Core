@@ -1,6 +1,7 @@
 package com.lolpvp.kits;
 
 import com.lolpvp.core.Core;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -49,6 +50,21 @@ public class KitManager {
         });
         kit.setPotionEffects(potionEffects);
         return kit;
+    }
+
+    public void giveKit(String kit, Player player) {
+        if(isKit(kit)) {
+            ItemStack[] inventory = (ItemStack[]) this.kitsData.getList(kit + ".inventory").toArray();
+            ItemStack[] armor = (ItemStack[]) this.kitsData.getList(kit + ".armor").toArray();
+            PotionEffect[] potionEffects = (PotionEffect[]) this.kitsData.getList(kit + ".potioneffects").toArray();
+            player.getInventory().setContents(inventory);
+            player.getInventory().setArmorContents(armor);
+            player.getActivePotionEffects().clear();
+            Arrays.stream(potionEffects).forEach(potionEffect -> potionEffect.apply(player));
+
+        } else {
+            player.sendMessage(ChatColor.RED + "That is not a kit.");
+        }
     }
 
     public void saveKit(Kit kit) {
