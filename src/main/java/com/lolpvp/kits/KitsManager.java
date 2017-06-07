@@ -16,13 +16,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
-public class KitManager {
+public class KitsManager {
 
     private Core plugin;
     private FileConfiguration kitsData;
     private File kitsFile;
 
-    public KitManager(Core instance) {
+    public KitsManager(Core instance) {
         this.plugin = instance;
         kitsFile = new File(instance.getDataFolder(), "kits.yml");
         if(!kitsFile.exists()) {
@@ -75,6 +75,12 @@ public class KitManager {
         this.kitsData.set(kit.getName() + ".inventory", inventory);
         this.kitsData.set(kit.getName() + ".armor", armor);
         this.kitsData.set(kit.getName() + ".potionEffects", potionEffects);
+    }
+
+    public void removeKit(String kit) {
+        if(isKit(kit)) {
+            this.kitsData.set(kit, null);
+        }
     }
 
     public void saveKitData() {

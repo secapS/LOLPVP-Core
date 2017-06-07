@@ -8,9 +8,12 @@ import java.util.logging.Level;
 
 import co.aikar.commands.ACF;
 import co.aikar.commands.CommandManager;
+import com.lolpvp.kits.KitsCommand;
+import com.lolpvp.kits.KitsManager;
 import com.lolpvp.signs.*;
 import com.lolpvp.votifier.VotesCommand;
 import com.lolpvp.votifier.VotesManager;
+import lombok.Getter;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -65,10 +68,16 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 public class Core extends JavaPlugin implements Listener
 {
     //Votes
+    @Getter
 	private VotesManager votesManager = null;
 
 	//Command signs
+    @Getter
 	private SignsManager signsManager = null;
+
+	//Kits
+    @Getter
+    private KitsManager kitsManager = null;
 
     //Old code
 	private static Economy econ = null;
@@ -103,6 +112,9 @@ public class Core extends JavaPlugin implements Listener
         this.signsManager = new SignsManager(this);
         this.getServer().getPluginManager().registerEvents(new SignsListener(this), this);
         this.signsManager.loadSigns();
+
+        //Kits
+        this.kitsManager = new KitsManager(this);
 
         //Old Stuff
         PerkBookManager.setup();
@@ -190,15 +202,7 @@ public class Core extends JavaPlugin implements Listener
     private void registerCommands() {
         this.commandManager.registerCommand(new VotesCommand(this));
         this.commandManager.registerCommand(new SignsCommand(this));
-    }
-
-    public VotesManager getVotesManager()
-    {
-        return this.votesManager;
-    }
-
-    public SignsManager getSignsManager() {
-	    return this.signsManager;
+        this.commandManager.registerCommand(new KitsCommand(this));
     }
 
 	public static Core getInstance() {
