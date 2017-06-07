@@ -8,6 +8,7 @@ import java.util.logging.Level;
 
 import co.aikar.commands.ACF;
 import co.aikar.commands.CommandManager;
+import com.lolpvp.signs.*;
 import com.lolpvp.votifier.VotesCommand;
 import com.lolpvp.votifier.VotesManager;
 import net.milkbowl.vault.chat.Chat;
@@ -46,9 +47,6 @@ import com.lolpvp.commands.trade.TradeCommand;
 import com.lolpvp.commands.trade.TradeManager;
 import com.lolpvp.redeemer.PerkBookCommand;
 import com.lolpvp.redeemer.PerkBookManager;
-import com.lolpvp.signs.BallerSign;
-import com.lolpvp.signs.BuySigns;
-import com.lolpvp.signs.SignSettingsManager;
 import com.lolpvp.utils.AntiSpamBot;
 import com.lolpvp.virtualchest.VirtualChest;
 import com.lolpvp.virtualchest.VirtualChestListener;
@@ -66,13 +64,18 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 
 public class Core extends JavaPlugin implements Listener
 {
+    //Votes
+	private VotesManager votesManager = null;
+
+	//Command signs
+	private SignsManager signsManager = null;
+
+    //Old code
 	private static Economy econ = null;
 	private ChatMethod chatmethod;
 	private ChatMethod2 chatmethod2;
 	private ChatFix chatFix;	
 	public static Chat chat = null;
-	private VotesManager votesManager = null;
-	public VotifierListener votifierListener = null;
 	public static Permission permission = null;
 	public MuteAll muteAll = null;
 	
@@ -87,10 +90,19 @@ public class Core extends JavaPlugin implements Listener
 	public void onEnable()
 	{
 	    instance = this;
+
+	    //Commands
 	    commandManager = ACF.createManager(this);
         registerCommands();
+
+        //Votes
         votesManager = new VotesManager(this);
         this.getServer().getPluginManager().registerEvents(new VotifierListener(this), this);
+
+        //Command signs
+        this.signsManager = new SignsManager(this);
+        this.getServer().getPluginManager().registerEvents(new SignsListener(this), this);
+        this.signsManager.loadSigns();
 
         //Old Stuff
         PerkBookManager.setup();
@@ -111,16 +123,13 @@ public class Core extends JavaPlugin implements Listener
 		getConfig().options().copyDefaults(true);
 		saveDefaultConfig();
 		reloadConfig();
-		SignSettingsManager.getInstance().setup(this);
 		this.getServer().getPluginManager().registerEvents(this, this);
 		this.getServer().getPluginManager().registerEvents(new ChestListener(this), this);
 		this.getServer().getPluginManager().registerEvents(new VirtualChestListener(), this);
 		this.getServer().getPluginManager().registerEvents(new PowerTool(this), this);
-		this.getServer().getPluginManager().registerEvents(new BuySigns(this), this);
 		this.getServer().getPluginManager().registerEvents(this.chatFix, this);
 		
 //		this.getServer().getPluginManager().registerEvents(this.newChat, this);
-		this.getServer().getPluginManager().registerEvents(new BallerSign(), this);
 		this.getServer().getPluginManager().registerEvents(new AntiSpamBot(this), this);
 		this.getServer().getPluginManager().registerEvents(muteAll, this);
 		this.getCommand("lol").setExecutor(new LOLPVPCommand());
@@ -134,7 +143,6 @@ public class Core extends JavaPlugin implements Listener
 		this.getCommand("clearchest2").setExecutor(new VirtualChest(this));
 		this.getCommand("pt").setExecutor(new PowerTool(this));
 		this.getCommand("clearpt").setExecutor(new PowerTool(this));
-		this.getCommand("qf").setExecutor(new BuySigns(this));
 //		this.getCommand("lolt").setExecutor(newChat);
 		
 		this.getCommand("lolt").setExecutor(this.chatFix);
@@ -152,7 +160,6 @@ public class Core extends JavaPlugin implements Listener
 		this.getCommand("lolm").setExecutor(this.chatFix);
 		
 		this.getCommand("who").setExecutor(new Who(this));
-		this.getCommand("ballersign").setExecutor(new BallerSign());
 		this.getCommand("clearchat").setExecutor(new ClearChat(this));
 		this.getCommand("muteall").setExecutor(muteAll);
 		this.getCommand("redeem").setExecutor(new PerkBookCommand());
@@ -182,6 +189,16 @@ public class Core extends JavaPlugin implements Listener
 
     private void registerCommands() {
         this.commandManager.registerCommand(new VotesCommand(this));
+        this.commandManager.registerCommand(new SignsCommand(this));
+    }
+
+    public VotesManager getVotesManager()
+    {
+        return this.votesManager;
+    }
+
+    public SignsManager getSignsManager() {
+	    return this.signsManager;
     }
 
 	public static Core getInstance() {
@@ -237,11 +254,6 @@ public class Core extends JavaPlugin implements Listener
 		block.setType(type);
 
 		return true;
-	}
-
-	public VotesManager getVotesManager()
-	{
-		return this.votesManager;
 	}
 
 	public ChatMethod getChatMethod()

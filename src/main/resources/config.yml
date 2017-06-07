@@ -128,7 +128,7 @@ items:
 # VOTING #
 # ======= #
 
-votestop: "&a{RANK}: &7{NAME} &a{VOTES}"
+votestop: "&a{RANK}: &7{PLAYER} &a{VOTES}"
 
 votes:
    format: "&a{VOTEAMOUNT} &7votes: &a{REWARD}"
