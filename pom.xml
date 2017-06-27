@@ -73,24 +73,34 @@
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
             <version>6.1.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
             <version>6.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>mkremins</groupId>
             <artifactId>fanciful</artifactId>
             <version>0.4.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>LATEST</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.stirante</groupId>
+            <artifactId>MoreProjectiles</artifactId>
+            <version>1.2-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -130,6 +140,8 @@
                             <shadedPattern>com.lolpvp.acf</shadedPattern>
                             <pattern>mkremins.fanciful</pattern>
                             <shadedPattern>com.lolpvp.fanciful</shadedPattern>
+                            <pattern>com.stirante.MoreProjectiles</pattern>
+                            <shadedPattern>com.lolpvp.moreprojectiles</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

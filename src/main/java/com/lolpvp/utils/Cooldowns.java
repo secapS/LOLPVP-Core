@@ -11,12 +11,12 @@ public class Cooldowns
 
 	public static long getCooldown(Player player, String key)
 	{
-		return calculateRemainder((Long)cooldowns.get(player.getName(), key));
+		return calculateRemainder(cooldowns.get(player.getName(), key));
 	}
 
 	public static long setCooldown(Player player, String key, long delay)
 	{
-		return calculateRemainder((Long)cooldowns.put(player.getName(), key, Long.valueOf(System.currentTimeMillis() + delay)));
+		return calculateRemainder(cooldowns.put(player.getName(), key, Long.valueOf(System.currentTimeMillis() + delay)));
 	}
 
 	public static boolean tryCooldown(Player player, String key, long delay)

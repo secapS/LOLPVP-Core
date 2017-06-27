@@ -2,6 +2,7 @@ package com.lolpvp.chat;
 
 import java.io.IOException;
 
+import mkremins.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -16,7 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.earth2me.essentials.Essentials;
 import com.lolpvp.core.Core;
 
 public class NewChat implements Listener, CommandExecutor
@@ -33,7 +33,7 @@ public class NewChat implements Listener, CommandExecutor
 	public void onChat(AsyncPlayerChatEvent event)
 	{
 		Player player = event.getPlayer();
-		if(!(Essentials.getPlugin(Essentials.class).getUser(player).isMuted() || this.plugin.muteAll.isChatMuted()))
+//		if(!(Essentials.getPlugin(Essentials.class).getUser(player).isMuted() || this.plugin.muteAll.isChatMuted()))
 		{
 			event.setCancelled(true);
 			FancyMessage newMessage = new FancyMessage();
@@ -60,16 +60,16 @@ public class NewChat implements Listener, CommandExecutor
 			{
 				newMessage.text(player.getDisplayName())
 				.color(ChatColor.GRAY)
-				.tooltip("Money: $" + Core.getEconomy().format(Core.getEconomy().getBalance(player)).replace(" Dollars", ""),
-					     "Team: " + Core.getTeams().getTeam(player))
+				.tooltip("Money: $" + Core.getEconomy().format(Core.getEconomy().getBalance(player)).replace(" Dollars", ""))
+//					     "Team: " + Core.getTeams().getTeam(player))
 				.suggest("/msg " + player.getName())
 				.then(">")
 				.color(ChatColor.GOLD)
 				.then(" " + event.getMessage())
 				.color(ChatColor.GRAY);
 			}
-			for(Player players : Bukkit.getOnlinePlayers())
-				newMessage.send(players);	
+//			for(Player players : Bukkit.getOnlinePlayers())
+//				newMessage.send(players);
 		}
 	}
 	
@@ -80,11 +80,11 @@ public class NewChat implements Listener, CommandExecutor
 		
 		if(plugin.getChatMethod2().hasTag(player))
 		{
-			player.setDisplayName(ChatColor.DARK_GRAY + "[" + ChatColor.translateAlternateColorCodes('&', plugin.getChatMethod2().filterTag(player)) + ChatColor.DARK_GRAY + "]" + ChatColor.GRAY + this.getNick(player) + ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + Core.getLevels().getPlayerLevel(player) + ChatColor.DARK_GRAY + "]");	
+//			player.setDisplayName(ChatColor.DARK_GRAY + "[" + ChatColor.translateAlternateColorCodes('&', plugin.getChatMethod2().filterTag(player)) + ChatColor.DARK_GRAY + "]" + ChatColor.GRAY + this.getNick(player) + ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + Core.getLevels().getPlayerLevel(player) + ChatColor.DARK_GRAY + "]");
 		}
 		else
 		{
-			player.setDisplayName(ChatColor.GRAY + this.getNick(player) + ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + Core.getLevels().getPlayerLevel(player) + ChatColor.DARK_GRAY + "]");
+//			player.setDisplayName(ChatColor.GRAY + this.getNick(player) + ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + Core.getLevels().getPlayerLevel(player) + ChatColor.DARK_GRAY + "]");
 		}
 	}
 	
@@ -127,12 +127,12 @@ public class NewChat implements Listener, CommandExecutor
 							if(fc.getString("nick") != null)
 							{
 								fc.set("nick", null);
-								try {
-									fc.save(this.plugin.playerFile(player));
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
+//								try {
+//									fc.save(this.plugin.playerFile(player));
+//								} catch (IOException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
 								sender.sendMessage(ChatColor.GREEN + "Removed nick from " + ChatColor.AQUA + player.getName());
 							}
 						}
@@ -152,13 +152,13 @@ public class NewChat implements Listener, CommandExecutor
 						{
 							FileConfiguration fc = this.plugin.playerData(player);
 							fc.set("nick", args[1]);
-							try {
-								fc.save(this.plugin.playerFile(player));
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							sender.sendMessage(ChatColor.GREEN + "Set " + ChatColor.AQUA + player.getName() + ChatColor.GREEN + "'s nick to " + ChatColor.AQUA + args[1]);
+//							try {
+//								fc.save(this.plugin.playerFile(player));
+//							} catch (IOException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							sender.sendMessage(ChatColor.GREEN + "Set " + ChatColor.AQUA + player.getName() + ChatColor.GREEN + "'s nick to " + ChatColor.AQUA + args[1]);
 						}
 					}
 					else
