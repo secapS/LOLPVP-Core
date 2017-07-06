@@ -2,7 +2,7 @@ name: LOLPVP
 main: com.lolpvp.core.Core
 authors: [Spaces, WhatATopic]
 version: ${project.version}
-depend: [PermissionsEX, Vault, Votifier, WorldGuard, WorldEdit]
+depend: [Vault, Votifier, WorldGuard, WorldEdit]
 website: lolpvp.com
 commands:
    lol:

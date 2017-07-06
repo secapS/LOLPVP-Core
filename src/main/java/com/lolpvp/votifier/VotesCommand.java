@@ -29,7 +29,7 @@ public class VotesCommand extends BaseCommand {
 
 
     @Default
-    @CommandPermission(Permissions.VOTES)
+    @CommandPermission(Permissions.PREFIX + "votes")
     public void onDefault(Player player, @Optional String otherPlayer) {
         FileConfiguration playerData;
         OfflinePlayer offlinePlayer = null;
@@ -39,7 +39,7 @@ public class VotesCommand extends BaseCommand {
             e.printStackTrace();
             this.plugin.getLogger().log(Level.WARNING, "Couldn't find UUID of the Username: " + otherPlayer);
         }
-        if(otherPlayer != null && player.hasPermission(Permissions.VOTES_OTHERS) && offlinePlayer != null) {
+        if(otherPlayer != null && player.hasPermission(Permissions.VOTES_OTHERS.toString()) && offlinePlayer != null) {
             playerData = this.plugin.playerData(offlinePlayer);
         } else {
             playerData = this.plugin.playerData(player);
@@ -59,7 +59,7 @@ public class VotesCommand extends BaseCommand {
     }
 
     @Subcommand("top|t")
-    @CommandPermission(Permissions.VOTES_TOP)
+    @CommandPermission(Permissions.PREFIX + "votes.top")
     public void onVotesTop(Player player) {
         SortedMap<UUID, Integer> sortedMap = this.plugin.getVotesManager().sortVotes();
         int rank = 1;
@@ -74,7 +74,7 @@ public class VotesCommand extends BaseCommand {
     }
 
     @Subcommand("reset")
-    @CommandPermission(Permissions.VOTES_RESET)
+    @CommandPermission(Permissions.PREFIX + "votes.reset")
     public void onResetVotes(Player player) {
         player.sendMessage(ChatColor.GREEN + "Everyone's votes has been reset.");
         File users = new File(this.plugin.getDataFolder(), "userdata");

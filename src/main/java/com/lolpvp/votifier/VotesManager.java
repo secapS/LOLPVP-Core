@@ -70,21 +70,21 @@ public class VotesManager {
             });
         }
     }
-}
 
-class ValueComparator implements Comparator<UUID> {
-    Map<UUID, Integer> base;
+    private class ValueComparator implements Comparator<UUID> {
+        Map<UUID, Integer> base;
 
-    public ValueComparator(Map<UUID, Integer> base) {
-        this.base = base;
-    }
+        public ValueComparator(Map<UUID, Integer> base) {
+            this.base = base;
+        }
 
-    @Override
-    public int compare(UUID a, UUID b) {
-        if (base.get(a) >= base.get(b)) {
-            return -1;
-        } else {
-            return 1;
+        @Override
+        public int compare(UUID a, UUID b) {
+            if (base.get(a) >= base.get(b)) {
+                return -1;
+            } else {
+                return 1;
+            }
         }
     }
 }
