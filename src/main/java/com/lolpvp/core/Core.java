@@ -43,7 +43,6 @@ import com.lolpvp.chests.ChestListener;
 import com.lolpvp.chests.ChestManager;
 import com.lolpvp.commands.LOLPVPCommand;
 import com.lolpvp.commands.classes.ClearChat;
-import com.lolpvp.commands.classes.ClearChest;
 import com.lolpvp.commands.classes.Disposal;
 import com.lolpvp.commands.classes.MuteAll;
 import com.lolpvp.commands.classes.PowerTool;
@@ -52,9 +51,6 @@ import com.lolpvp.commands.kits.Kits;
 import com.lolpvp.commands.trade.TradeCommand;
 import com.lolpvp.commands.trade.TradeManager;
 import com.lolpvp.utils.AntiSpamBot;
-import com.lolpvp.virtualchest.VirtualChest;
-import com.lolpvp.virtualchest.VirtualChestListener;
-import com.lolpvp.virtualchest.VirtualChestManager;
 import com.lolpvp.votifier.VotifierListener;
 import com.lolpvp.weapons.ItemManager;
 import com.lolpvp.weapons.classes.InvisRing;
@@ -92,8 +88,6 @@ public class Core extends JavaPlugin implements Listener
 	public static Chat chat = null;
 	public static Permission permission = null;
 	public MuteAll muteAll = null;
-	
-	private ClearChest clearChests = new ClearChest(this);
 	
 	private static Core instance;
 	
@@ -138,13 +132,11 @@ public class Core extends JavaPlugin implements Listener
 		ItemManager.getInstance().registerItems(this);
 		ChestManager.setup(this);
 		Chest.setup(this);
-		VirtualChestManager.setup(this);
 		getConfig().options().copyDefaults(true);
 		saveDefaultConfig();
 		reloadConfig();
 		this.getServer().getPluginManager().registerEvents(this, this);
 		this.getServer().getPluginManager().registerEvents(new ChestListener(this), this);
-		this.getServer().getPluginManager().registerEvents(new VirtualChestListener(), this);
 		this.getServer().getPluginManager().registerEvents(new PowerTool(this), this);
 		this.getServer().getPluginManager().registerEvents(this.chatFix, this);
 		
@@ -158,8 +150,6 @@ public class Core extends JavaPlugin implements Listener
 		this.getCommand("nightvision").setExecutor(new Kits());
 		this.getCommand("fireresistance").setExecutor(new Kits());
 		this.getCommand("invis").setExecutor(new Kits());
-		this.getCommand("chest2").setExecutor(new VirtualChest(this));
-		this.getCommand("clearchest2").setExecutor(new VirtualChest(this));
 		this.getCommand("pt").setExecutor(new PowerTool(this));
 		this.getCommand("clearpt").setExecutor(new PowerTool(this));
 //		this.getCommand("lolt").setExecutor(newChat);
@@ -188,8 +178,6 @@ public class Core extends JavaPlugin implements Listener
 		this.getCommand("lolsword").setExecutor(new LOLSword(this));
 		this.getCommand("resetmoneybag").setExecutor(new MoneyBag(this));
 		this.getCommand("invisring").setExecutor(new InvisRing(this));
-		this.getCommand("clearchests").setExecutor(this.clearChests);
-		this.getCommand("checkchests").setExecutor(this.clearChests);
 //		this.getCommand("setnick").setExecutor(this.newChat);
 		if (!setupEconomy())
 		{

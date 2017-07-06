@@ -102,6 +102,12 @@
             <version>1.2-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>bizzarealex</groupId>
+            <artifactId>Glaedr</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -142,6 +148,8 @@
                             <shadedPattern>com.lolpvp.fanciful</shadedPattern>
                             <pattern>com.stirante.MoreProjectiles</pattern>
                             <shadedPattern>com.lolpvp.moreprojectiles</shadedPattern>
+                            <pattern>com.alexandeh.glaedr</pattern>
+                            <shadedPattern>com.lolpvp.glaedr</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
