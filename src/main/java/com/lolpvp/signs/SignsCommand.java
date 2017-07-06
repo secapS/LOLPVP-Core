@@ -22,7 +22,7 @@ public class SignsCommand extends BaseCommand {
     }
 
     @Subcommand("create|c")
-    @CommandPermission(Permissions.SIGNS_CREATE)
+    @CommandPermission(Permissions.PREFIX + "signs.create")
     public void onCreate(Player player, int price, @Single String command) {
         if((player.getTargetBlock(null, 6).getType().equals(Material.SIGN)) || (player.getTargetBlock(null, 6).getType().equals(Material.SIGN_POST)) || (player.getTargetBlock(null, 6).getType().equals(Material.WALL_SIGN))) {
             Sign sign = (Sign)(player.getTargetBlock(null, 6)).getState();
@@ -33,7 +33,7 @@ public class SignsCommand extends BaseCommand {
     }
 
     @Subcommand("addcommand|ac")
-    @CommandPermission(Permissions.SIGNS_ADD_COMMAND)
+    @CommandPermission(Permissions.PREFIX + "signs.add-command")
     public void onAddCommand(Player player, @Single String command) {
         if((player.getTargetBlock(null, 6).getType().equals(Material.SIGN)) || (player.getTargetBlock(null, 6).getType().equals(Material.SIGN_POST)) || (player.getTargetBlock(null, 6).getType().equals(Material.WALL_SIGN))) {
             Sign sign = (Sign)(player.getTargetBlock(null, 6)).getState();

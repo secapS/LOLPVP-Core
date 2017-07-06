@@ -1,6 +1,7 @@
 package com.lolpvp.kits;
 
 import com.lolpvp.core.Core;
+import com.lolpvp.core.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -53,6 +54,7 @@ public class KitsManager {
     }
 
     public void giveKit(String kit, Player player) {
+        if(!player.hasPermission(Permissions.PREFIX + "kits." + kit)) player.sendMessage(ChatColor.RED + "You do not have permission for this kit.");
         if(isKit(kit)) {
             ItemStack[] inventory = (ItemStack[]) this.kitsData.getList(kit + ".inventory").toArray();
             ItemStack[] armor = (ItemStack[]) this.kitsData.getList(kit + ".armor").toArray();

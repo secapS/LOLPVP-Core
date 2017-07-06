@@ -10,6 +10,9 @@ import co.aikar.commands.ACF;
 import co.aikar.commands.CommandManager;
 import com.lolpvp.kits.KitsCommand;
 import com.lolpvp.kits.KitsManager;
+import com.lolpvp.perkbooks.PerkBookCommand;
+import com.lolpvp.perkbooks.PerkBookManager;
+import com.lolpvp.perkbooks.RedeemCommand;
 import com.lolpvp.signs.*;
 import com.lolpvp.votifier.VotesCommand;
 import com.lolpvp.votifier.VotesManager;
@@ -48,8 +51,6 @@ import com.lolpvp.commands.classes.Who;
 import com.lolpvp.commands.kits.Kits;
 import com.lolpvp.commands.trade.TradeCommand;
 import com.lolpvp.commands.trade.TradeManager;
-import com.lolpvp.redeemer.PerkBookCommand;
-import com.lolpvp.redeemer.PerkBookManager;
 import com.lolpvp.utils.AntiSpamBot;
 import com.lolpvp.virtualchest.VirtualChest;
 import com.lolpvp.virtualchest.VirtualChestListener;
@@ -78,6 +79,10 @@ public class Core extends JavaPlugin implements Listener
 	//Kits
     @Getter
     private KitsManager kitsManager = null;
+
+    //Perkbooks
+    @Getter
+    private PerkBookManager perkBookManager = null;
 
     //Old code
 	private static Economy econ = null;
@@ -116,8 +121,10 @@ public class Core extends JavaPlugin implements Listener
         //Kits
         this.kitsManager = new KitsManager(this);
 
+        //Perkbooks
+        perkBookManager = new PerkBookManager(this);
+
         //Old Stuff
-        PerkBookManager.setup();
 		ItemManager.setup(this);
 		this.setupChat();
 		muteAll = new MuteAll(this);
@@ -174,8 +181,8 @@ public class Core extends JavaPlugin implements Listener
 		this.getCommand("who").setExecutor(new Who(this));
 		this.getCommand("clearchat").setExecutor(new ClearChat(this));
 		this.getCommand("muteall").setExecutor(muteAll);
-		this.getCommand("redeem").setExecutor(new PerkBookCommand());
-		this.getCommand("pgive").setExecutor(new PerkBookCommand());
+//		this.getCommand("redeem").setExecutor(new PerkBookCommand());
+//		this.getCommand("pgive").setExecutor(new PerkBookCommand());
 		this.getCommand("dispose").setExecutor(new Disposal());
 		this.getCommand("loltrade").setExecutor(new TradeCommand());
 		this.getCommand("lolsword").setExecutor(new LOLSword(this));
@@ -203,6 +210,8 @@ public class Core extends JavaPlugin implements Listener
         this.commandManager.registerCommand(new VotesCommand(this));
         this.commandManager.registerCommand(new SignsCommand(this));
         this.commandManager.registerCommand(new KitsCommand(this));
+        this.commandManager.registerCommand(new PerkBookCommand(this));
+        this.commandManager.registerCommand(new RedeemCommand(this));
     }
 
 	public static Core getInstance() {
