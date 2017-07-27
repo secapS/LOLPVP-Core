@@ -8,7 +8,6 @@ import java.util.logging.Level;
 
 import co.aikar.commands.ACF;
 import co.aikar.commands.CommandManager;
-import com.lolpvp.enchantments.CustomEnchantmentManager;
 import com.lolpvp.kits.KitsCommand;
 import com.lolpvp.kits.KitsManager;
 import com.lolpvp.perkbooks.PerkBookCommand;
@@ -17,6 +16,7 @@ import com.lolpvp.perkbooks.RedeemCommand;
 import com.lolpvp.signs.*;
 import com.lolpvp.votifier.VotesCommand;
 import com.lolpvp.votifier.VotesManager;
+import com.lolpvp.weapons.CustomItemManager;
 import lombok.Getter;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
@@ -83,7 +83,7 @@ public class Core extends JavaPlugin implements Listener
 
     //Custom Enchantments
     @Getter
-    private CustomEnchantmentManager customEnchantmentManager = null;
+    private CustomItemManager customItemManager = null;
 
     private CommandManager commandManager;
 
@@ -124,10 +124,12 @@ public class Core extends JavaPlugin implements Listener
         perkBookManager = new PerkBookManager(this);
 
         //Custom Enchantments
-        customEnchantmentManager = new CustomEnchantmentManager();
+        customItemManager = new CustomItemManager();
 
-        //Old Stuff
-		ItemManager.setup(this);
+        /*
+         * OLD CODE BEYOND THIS POINT
+         */
+        ItemManager.setup(this);
 		this.setupChat();
 		muteAll = new MuteAll(this);
 		chatFix = new ChatFix(this);
