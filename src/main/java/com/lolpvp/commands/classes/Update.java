@@ -9,13 +9,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.lolpvp.commands.SubCommand;
-import com.lolpvp.weapons.ItemManager;
-import com.lolpvp.weapons.classes.Prot4;
-import com.lolpvp.weapons.classes.Prot4AE;
-import com.lolpvp.weapons.classes.Prot5;
-import com.lolpvp.weapons.classes.Prot5AE;
-import com.lolpvp.weapons.classes.Prot6;
-import com.lolpvp.weapons.classes.Prot6AE;
+import com.lolpvp.weaponsold.ItemManager;
+import com.lolpvp.weaponsold.classes.Prot4;
+import com.lolpvp.weaponsold.classes.Prot4AE;
+import com.lolpvp.weaponsold.classes.Prot5;
+import com.lolpvp.weaponsold.classes.Prot5AE;
+import com.lolpvp.weaponsold.classes.Prot6;
+import com.lolpvp.weaponsold.classes.Prot6AE;
 
 public class Update extends SubCommand {
 

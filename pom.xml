@@ -104,9 +104,10 @@
         </dependency>
 
         <dependency>
-            <groupId>bizzarealex</groupId>
+            <groupId>com.alexandeh</groupId>
             <artifactId>Glaedr</artifactId>
-            <scope>provided</scope>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

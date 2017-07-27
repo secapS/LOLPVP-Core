@@ -6,16 +6,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.lolpvp.commands.SubCommand;
-import com.lolpvp.weapons.BallerItem;
-import com.lolpvp.weapons.ItemManager;
-import com.lolpvp.weapons.classes.IronManSuit;
-import com.lolpvp.weapons.classes.Prot4;
-import com.lolpvp.weapons.classes.Prot4AE;
-import com.lolpvp.weapons.classes.Prot5;
-import com.lolpvp.weapons.classes.Prot5AE;
-import com.lolpvp.weapons.classes.Prot6;
-import com.lolpvp.weapons.classes.Prot6AE;
-import com.lolpvp.weapons.classes.SnowArmor;
+import com.lolpvp.weaponsold.BallerItem;
+import com.lolpvp.weaponsold.ItemManager;
+import com.lolpvp.weaponsold.classes.IronManSuit;
+import com.lolpvp.weaponsold.classes.Prot4;
+import com.lolpvp.weaponsold.classes.Prot4AE;
+import com.lolpvp.weaponsold.classes.Prot5;
+import com.lolpvp.weaponsold.classes.Prot5AE;
+import com.lolpvp.weaponsold.classes.Prot6;
+import com.lolpvp.weaponsold.classes.Prot6AE;
+import com.lolpvp.weaponsold.classes.SnowArmor;
 
 public class GetItems extends SubCommand
 {

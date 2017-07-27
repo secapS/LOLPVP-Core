@@ -8,6 +8,7 @@ import java.util.logging.Level;
 
 import co.aikar.commands.ACF;
 import co.aikar.commands.CommandManager;
+import com.lolpvp.enchantments.CustomEnchantmentManager;
 import com.lolpvp.kits.KitsCommand;
 import com.lolpvp.kits.KitsManager;
 import com.lolpvp.perkbooks.PerkBookCommand;
@@ -52,10 +53,10 @@ import com.lolpvp.commands.trade.TradeCommand;
 import com.lolpvp.commands.trade.TradeManager;
 import com.lolpvp.utils.AntiSpamBot;
 import com.lolpvp.votifier.VotifierListener;
-import com.lolpvp.weapons.ItemManager;
-import com.lolpvp.weapons.classes.InvisRing;
-import com.lolpvp.weapons.classes.LOLSword;
-import com.lolpvp.weapons.classes.MoneyBag;
+import com.lolpvp.weaponsold.ItemManager;
+import com.lolpvp.weaponsold.classes.InvisRing;
+import com.lolpvp.weaponsold.classes.LOLSword;
+import com.lolpvp.weaponsold.classes.MoneyBag;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
@@ -80,6 +81,12 @@ public class Core extends JavaPlugin implements Listener
     @Getter
     private PerkBookManager perkBookManager = null;
 
+    //Custom Enchantments
+    @Getter
+    private CustomEnchantmentManager customEnchantmentManager = null;
+
+    private CommandManager commandManager;
+
     //Old code
 	private static Economy econ = null;
 	private ChatMethod chatmethod;
@@ -90,14 +97,12 @@ public class Core extends JavaPlugin implements Listener
 	public MuteAll muteAll = null;
 	
 	private static Core instance;
-	
-	private CommandManager commandManager;
 //	private NewChat newChat = null;
 	
 	@Override
 	public void onEnable()
 	{
-	    instance = this;
+	    if(!this.getDataFolder().exists()) this.getDataFolder().mkdir();
 
 	    //Commands
 	    commandManager = ACF.createManager(this);
@@ -117,6 +122,9 @@ public class Core extends JavaPlugin implements Listener
 
         //Perkbooks
         perkBookManager = new PerkBookManager(this);
+
+        //Custom Enchantments
+        customEnchantmentManager = new CustomEnchantmentManager();
 
         //Old Stuff
 		ItemManager.setup(this);

@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.lolpvp.commands.SubCommand;
-import com.lolpvp.weapons.ItemManager;
+import com.lolpvp.weaponsold.ItemManager;
 
 public class Price extends SubCommand
 {
